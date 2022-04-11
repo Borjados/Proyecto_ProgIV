@@ -1,13 +1,11 @@
-/*
- * main.c
- *
- *  Created on: 5 abr 2022
- *      Author: borja
- */
 #include <stdio.h>
+#include <stdlib.h>
+#include "admin/admin.h"
 
 int main(){
 
+	adminInicio();
+/*
 	setvbuf(stdout, NULL, _IONBF, 0);
 	int seleccion, DNI, tarjeta, telefono, selecadmin, bono;
 	char nombre[20];
@@ -147,7 +145,7 @@ int main(){
 	}
 	}
 
-
+*/
 	return 0;
 }
 
