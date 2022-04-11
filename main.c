@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "admin/admin.h"
 
+
 int main(){
 
 	inicio();
