@@ -4,7 +4,9 @@
 
 int main(){
 
-	adminInicio();
+	inicio();
+
+	//adminInicio();
 /*
 	setvbuf(stdout, NULL, _IONBF, 0);
 	int seleccion, DNI, tarjeta, telefono, selecadmin, bono;

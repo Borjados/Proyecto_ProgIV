@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "admin.h"
 #include "estadisticas.h"
+#include "inicio.h"
 
 void adminInicio(){
 
@@ -29,6 +30,7 @@ void adminInicio(){
 		ficheros();
 	} else if(sel==4) {
 		//Aqui llamar a clase iniciar sesion xddddddddddddddddddddddddddddd
+		inicio();
 	} else {
 		printf("ya me joderia");
 		adminInicio();
