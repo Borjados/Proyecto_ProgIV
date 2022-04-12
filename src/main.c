@@ -20,6 +20,8 @@ int main(){
 
 	inicio(db);
 
+	sqlite3_close(db);
+
 	return 0;
 }
 
