@@ -7,7 +7,7 @@
 
 int main(){
 
-	sqlite3 *db;/*
+	sqlite3 *db;
 
 	int result = sqlite3_open("test.sqlite", db);
 
@@ -16,7 +16,7 @@ int main(){
 		return result;
 	}
 
-	printf("Database opened\n") ;*/
+	printf("Database opened\n") ;
 
 	inicio(db);
 

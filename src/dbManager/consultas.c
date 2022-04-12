@@ -53,5 +53,23 @@ int updateBonos(sqlite3 *db, char tipo, int precio){
 	}
 	printf("SQL query prepared (UPDATE)\n");
 
+	sqlite3_bind_int(stmt, 1, precio);
+	sqlite3_bind_text(stmt, 2, tipo, strlen(tipo), SQLITE_STATIC);
 
+	result = sqlite3_step(stmt);
+	if (result != SQLITE_DONE) {
+		printf("Error updating new data into bono table\n");
+		return result;
+	}
+
+	result = sqlite3_finalize(stmt);
+	if (result != SQLITE_OK) {
+		printf("Error finalizing statement (UPDATE)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+
+	printf("Prepared statement finalized (INSERT)\n");
+
+	return SQLITE_OK;
 }

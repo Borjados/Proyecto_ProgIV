@@ -5,6 +5,6 @@
 
 int insertNewUser(sqlite3 *db, char nombre[], char username[], char apellidos[], char contrasena[], char tipo, int DNI, int tarjeta, int telefono);
 
-
+int updateBonos(sqlite3 *db, char tipo, int precio);
 
 #endif /* SQLITE3_CONSULTAS_H_ */
