@@ -67,6 +67,7 @@ dkms.conf
 ### Eclipse
 # Files and folders
 .metadata
+.project
 bin/
 tmp/
 *.tmp
