@@ -9,7 +9,7 @@ int main(){
 
 	sqlite3 *db;
 
-	int result = sqlite3_open("test.sqlite", db);
+	int result = sqlite3_open("dbproyecto.db", db);
 
 	if (result != SQLITE_OK) {
 		printf("Error opening database\n");
