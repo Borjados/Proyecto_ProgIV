@@ -121,4 +121,68 @@ int newInicio(sqlite3 *db, char nombre[], char contrasena) {
 
 			return result;
 
+}
+
+void tarifaMasUsada(sqlite3 *db){
+	sqlite3_stmt *stmt;
+
+	char sql[] = "SELECT TOP 1 id_bono FROM Usuario GROUP BY id_bono ORDER BY COUNT(id_bono) DESC";
+
+	int result = sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL);
+	if (result != SQLITE_OK) {
+		printf("Error preparing statement (INSERT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+	}
+	printf("La tarifa más solicitada es el...\n");
+	result = sqlite3_step(stmt);
+	if (result == SQLITE_ROW) {
+		int id = sqlite3_column_int(stmt, 0);
+		if (id == 1) {
+			printf("Bono diario");
 		}
+		if (id == 2) {
+			printf("Bono semanal");
+		}
+		if (id == 3) {
+			printf("Bono de 2 semanas");
+		}
+
+		if (id == 4) {
+			printf("Bono mensual");
+		}
+		if (id == 5) {
+			printf("Bono cuatrimestral");
+		}
+	}
+}
+
+void usuarioMasComun(sqlite3 *db){
+	sqlite3_stmt *stmt;
+
+	char sql[] = "SELECT TOP 1 tipo_usuario FROM Usuario GROUP BY tipo_usuario ORDER BY COUNT(tipo_usuario) DESC";
+
+	int result = sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL);
+	if (result != SQLITE_OK) {
+		printf("Error preparing statement (INSERT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+	}
+
+	printf("El tipo de usuario más común es...\n");
+	result = sqlite3_step(stmt);
+	if (result == SQLITE_ROW) {
+		char *id = sqlite3_column_text(stmt, 0);
+
+		if (strcmp(id, "estudiante") == 0) {
+			printf("Estudiante.");
+		}
+		if (strcmp(id, "profesor") == 0) {
+			printf("Profesor.");
+		}
+		if (strcmp(id, "regular") == 0) {
+			printf("Usuario externo.");
+		}
+	}
+
+}
+
+

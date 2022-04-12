@@ -12,7 +12,7 @@ void estadisticas(sqlite3 *db){
 	fflush(stdout);
 	printf("1.Tarifa más solicitada\n");
 	fflush(stdout);
-	printf("2.Tipos de usuario más comunes\n");
+	printf("2.Tipo de usuario más común\n");
 	fflush(stdout);
 	printf("3.Usuarios más frecuentes\n");
 	fflush(stdout);
@@ -24,9 +24,9 @@ void estadisticas(sqlite3 *db){
 	scanf(" %i", &sel);
 
 	if(sel==1) {
-
+		tarifaMasUsada(db);
 	} else if(sel==2) {
-
+		usuarioMasComun(db);
 	} else if(sel==3) {
 
 	} else if(sel==4) {

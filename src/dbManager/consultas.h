@@ -9,4 +9,8 @@ int updateBonos(sqlite3 *db, char tipo, int precio);
 
 int newInicio(sqlite3 *db, char nombre[], char contrasena);
 
+void tarifaMasUsada(sqlite3 *db);
+
+void usuarioMasComun(sqlite3 *db);
+
 #endif /* SQLITE3_CONSULTAS_H_ */
