@@ -40,3 +40,18 @@ int insertNewUser(sqlite3 *db, char nombre[], char username[], char apellidos[],
 
 		return SQLITE_OK;
 }
+
+int updateBonos(sqlite3 *db, char tipo, int precio){
+	sqlite3_stmt *stmt;
+
+	char sql[] = "UPDATE Bonos set precio=? WHERE where tipo=?";
+	int result = sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL) ;
+	if (result != SQLITE_OK) {
+		printf("Error preparing statement (INSERT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+	printf("SQL query prepared (UPDATE)\n");
+
+
+}
