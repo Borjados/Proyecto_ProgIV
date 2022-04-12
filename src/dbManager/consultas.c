@@ -4,7 +4,7 @@
 int insertNewUser(sqlite3 *db, char nombre[], char username[], char apellidos[], char contrasena[], char tipo, int DNI, int tarjeta, int telefono){
 	sqlite3_stmt *stmt;
 
-		char sql[] = "insert into usuario (id, nombre, username, apellidos, contrasena, tipo, DNI, tarjeta, telefono) values (NULL, ?, ?, ?, ?, ?, ?, ?, ?)";
+		char sql[] = "insert into Usuario (dni, username, nombre, apellidos, num_tarjeta, contrasenya, telefono, tipo_usuario, id_taquilla, id_bono) values (?, ?, ?, ?, ?, ?, ?, ?, NULL, NULL)";
 		int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
 		if (result != SQLITE_OK) {
 			printf("Error preparing statement (INSERT)\n");
@@ -14,14 +14,15 @@ int insertNewUser(sqlite3 *db, char nombre[], char username[], char apellidos[],
 
 		printf("SQL query prepared (INSERT)\n");
 
-		sqlite3_bind_text(stmt, 1, nombre, strlen(nombre), SQLITE_STATIC);
+		sqlite3_bind_int(stmt, 1, DNI);
 		sqlite3_bind_text(stmt, 2, username, strlen(username), SQLITE_STATIC);
-		sqlite3_bind_text(stmt, 3, apellidos, strlen(apellidos), SQLITE_STATIC);
-		sqlite3_bind_text(stmt, 4, contrasena, strlen(contrasena), SQLITE_STATIC);
-		sqlite3_bind_text(stmt, 5, tipo, strlen(tipo), SQLITE_STATIC);
-		sqlite3_bind_int(stmt, 6, DNI);
-		sqlite3_bind_int(stmt, 7, tarjeta);
-		sqlite3_bind_int(stmt, 8, telefono);
+		sqlite3_bind_text(stmt, 3, nombre, strlen(nombre), SQLITE_STATIC);
+		sqlite3_bind_text(stmt, 4, apellidos, strlen(apellidos), SQLITE_STATIC);
+		sqlite3_bind_int(stmt, 5, tarjeta);
+		sqlite3_bind_text(stmt, 6, contrasena, strlen(contrasena), SQLITE_STATIC);
+		sqlite3_bind_int(stmt, 7, telefono);
+		sqlite3_bind_text(stmt, 8, tipo, strlen(tipo), SQLITE_STATIC);
+
 
 		result = sqlite3_step(stmt);
 		if (result != SQLITE_DONE) {
@@ -44,7 +45,7 @@ int insertNewUser(sqlite3 *db, char nombre[], char username[], char apellidos[],
 int updateBonos(sqlite3 *db, char tipo, int precio){
 	sqlite3_stmt *stmt;
 
-	char sql[] = "UPDATE Bonos set precio=? WHERE where tipo=?";
+	char sql[] = "UPDATE Bono set precio=? WHERE where tipo_bono=?";
 	int result = sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL) ;
 	if (result != SQLITE_OK) {
 		printf("Error preparing statement (INSERT)\n");
