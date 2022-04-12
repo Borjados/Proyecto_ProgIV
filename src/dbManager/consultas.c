@@ -74,3 +74,51 @@ int updateBonos(sqlite3 *db, char tipo, int precio){
 
 	return SQLITE_OK;
 }
+
+int newInicio(sqlite3 *db, char nombre[], char contrasena) {
+	sqlite3_stmt *stmt;
+	char sql[] =
+			"Select contrasenya, tipo_usuario from Usuario where username = ?";
+	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+	if (result != SQLITE_OK) {
+		printf("Error preparing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+
+	printf("SQL query prepared (SELECT)\n");
+
+	char contrasenya[200];
+	char tipo_usuario[200];
+
+	do {
+		result = sqlite3_step(stmt);
+		if (result == SQLITE_ROW) {
+			strcpy(contrasenya, (char*) sqlite3_column_text(stmt, 0));
+			strcpy(tipo_usuario, (char *) sqlite3_column_text(stmt, 1);
+					printf("ID: %d Name: %s\n", id, name);
+				}
+			} while (result == SQLITE_ROW);
+
+			result = sqlite3_finalize(stmt);
+			if (result != SQLITE_OK) {
+				printf("Error finalizing statement (SELECT)\n");
+				printf("%s\n", sqlite3_errmsg(db));
+				return result;
+			}
+
+			printf("Prepared statement finalized (SELECT)\n");
+
+			if (contrasena == contrasenya) {
+				if (tipo_usuario == "estudiante" || tipo_usuario == "regular" || tipo_usuario == "profesor") {
+					result = 1;
+				} else if (tipo_usuario == "Administrador") {
+					result = 2;
+				}
+			} else {
+				result = 3;
+			}
+
+			return result;
+
+		}
