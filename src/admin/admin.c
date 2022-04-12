@@ -4,7 +4,7 @@
 #include "estadisticas.h"
 #include "../auth/inicio.h"
 
-void adminInicio(){
+void adminInicio(sqlite3 *db){
 
 	printf("¡BIENVENIDO ADMINISTRADOR!\n");
 	fflush(stdout);
@@ -23,17 +23,15 @@ void adminInicio(){
 	scanf(" %i", &sel);
 
 	if(sel==1) {
-		estadisticas();
+		estadisticas(db);
 	} else if(sel==2) {
-		bonos();
+		bonos(db);
 	} else if(sel==3) {
-		ficheros();
+		ficheros(db);
 	} else if(sel==4) {
-		//Aqui llamar a clase iniciar sesion xddddddddddddddddddddddddddddd
-		inicio();
+		inicio(db);
 	} else {
-		printf("ya me joderia");
-		adminInicio();
+		adminInicio(db);
 	}
 
 }

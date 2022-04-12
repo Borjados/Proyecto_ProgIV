@@ -3,7 +3,7 @@
 #include "ficheros.h"
 #include "admin.h"
 
-void ficheros(){
+void ficheros(sqlite3 *db){
 
 	int sel; //selección
 	printf("FICHEROS\n");
@@ -28,9 +28,9 @@ void ficheros(){
 	} else if(sel==2) {
 
 	} else if(sel==3) {
-		adminInicio();
+		adminInicio(db);
 	} else {
-		ficheros();
+		ficheros(db);
 	}
 
 }

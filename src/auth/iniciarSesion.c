@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "iniciarSesion.h"
 
-void iniciarSesion(){
+void iniciarSesion(sqlite3 *db){
 
 	int i = 2;
 	char nombre[20];
@@ -30,7 +30,7 @@ void iniciarSesion(){
 	else if(i == 2){
 		//Aqui es para la consulta de si el usuario esta registrado, entonces sigue el programa, si no pasa al else
 		//Administrador
-		adminInicio();
+		adminInicio(db);
 	}
 	else{
 		printf("\nDebes registrarte primero\n");

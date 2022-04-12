@@ -3,7 +3,7 @@
 #include "bonos.h"
 #include "admin.h"
 
-void bonos(){
+void bonos(sqlite3 *db){
 	int sel; //selección
 		printf("BONOS\n");
 		fflush(stdout);
@@ -29,7 +29,7 @@ void bonos(){
 		scanf(" %i", &sel);
 
 		if(sel==1) {
-			estadisticas();
+			estadisticas(db);
 		} else if(sel==2) {
 
 		} else if(sel==3) {
@@ -39,9 +39,9 @@ void bonos(){
 		} else if(sel==5) {
 
 		} else if(sel==6) {
-			adminInicio();
+			adminInicio(db);
 		} else {
-			bonos();
+			bonos(db);
 		}
 
 

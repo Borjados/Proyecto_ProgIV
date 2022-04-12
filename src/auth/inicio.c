@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "inicio.h"
 
+
+
 void inicio(sqlite3 *db){
 
 	int sel = 0;
@@ -22,14 +24,14 @@ void inicio(sqlite3 *db){
 		switch (sel){
 		case 1:
 
-			iniciarSesion();
+			iniciarSesion(db);
 
 		break;
 
 
 		case 2:
 
-			registro(&db);
+			registro(db);
 
 		break;
 

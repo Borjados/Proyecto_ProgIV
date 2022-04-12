@@ -3,13 +3,14 @@
 #include "estadisticas.h"
 #include "admin.h"
 
-void estadisticas(){
+
+void estadisticas(sqlite3 *db){
 	int sel; //selección
 	printf("MENÚ ESTADÍSTICAS\n");
 	fflush(stdout);
 	printf("------------------------------\n");
 	fflush(stdout);
-	printf("1.Tarifas más solicitadas\n");
+	printf("1.Tarifa más solicitada\n");
 	fflush(stdout);
 	printf("2.Tipos de usuario más comunes\n");
 	fflush(stdout);
@@ -29,10 +30,10 @@ void estadisticas(){
 	} else if(sel==3) {
 
 	} else if(sel==4) {
-		adminInicio();
+		adminInicio(db);
 	} else {
 		printf("ya me joderia");
-		estadisticas();
+		estadisticas(db);
 	}
 
 }
