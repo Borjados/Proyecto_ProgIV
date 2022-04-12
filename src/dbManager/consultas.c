@@ -4,7 +4,7 @@
 int insertNewUser(sqlite3 *db, char nombre[], char username[], char apellidos[], char contrasena[], char tipo, int DNI, int tarjeta, int telefono){
 	sqlite3_stmt *stmt;
 
-		char sql[] = "insert into Usuario (dni, username, nombre, apellidos, num_tarjeta, contrasenya, telefono, tipo_usuario, id_taquilla, id_bono) values (?, ?, ?, ?, ?, ?, ?, ?, NULL, NULL)";
+		char sql[] = "insert into Usuario (dni, username, nombre, apellidos, num_tarjeta, contrasenya, telefono, tipo_usuario) values (?, ?, ?, ?, ?, ?, ?, ?)";
 		int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
 		if (result != SQLITE_OK) {
 			printf("Error preparing statement (INSERT)\n");
@@ -45,7 +45,7 @@ int insertNewUser(sqlite3 *db, char nombre[], char username[], char apellidos[],
 int updateBonos(sqlite3 *db, char tipo, int precio){
 	sqlite3_stmt *stmt;
 
-	char sql[] = "UPDATE Bono set precio=? WHERE where tipo_bono=?";
+	char sql[] = "UPDATE Bono SET precio=? WHERE tipo_bono=?";
 	int result = sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL) ;
 	if (result != SQLITE_OK) {
 		printf("Error preparing statement (INSERT)\n");
