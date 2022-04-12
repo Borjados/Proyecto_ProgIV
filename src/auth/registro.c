@@ -1,15 +1,8 @@
-/*
- * registro.c
- *
- *  Created on: 11 abr 2022
- *      Author: borja
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include "registro.h"
 #include "inicio.h"
-#include "sqlite3/consultas.h"
+#include "../dbManager/consultas.h"
 
 void registro(sqlite3 *db){
 

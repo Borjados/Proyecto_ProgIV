@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "admin.h"
 #include "estadisticas.h"
-#include "inicio.h"
+#include "../auth/inicio.h"
 
 void adminInicio(){
 

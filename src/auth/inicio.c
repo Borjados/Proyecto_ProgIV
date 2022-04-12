@@ -1,10 +1,3 @@
-/*
- * inicio.c
- *
- *  Created on: 11 abr 2022
- *      Author: borja
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include "inicio.h"

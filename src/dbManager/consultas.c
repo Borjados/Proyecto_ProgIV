@@ -1,12 +1,4 @@
-/*
- * consultas.c
- *
- *  Created on: 12 abr 2022
- *      Author: borja
- */
-
 #include "consultas.h"
-#include "sqlite3.h"
 #include <stdio.h>
 
 int insertNewUser(sqlite3 *db, char nombre[], char username[], char apellidos[], char contrasena[], char tipo, int DNI, int tarjeta, int telefono){
