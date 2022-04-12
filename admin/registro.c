@@ -9,8 +9,9 @@
 #include <stdlib.h>
 #include "registro.h"
 #include "inicio.h"
+#include "sqlite3/consultas.h"
 
-void registro(){
+void registro(sqlite3 *db){
 
 	int seleccion, DNI, tarjeta, telefono, selecadmin, bono;
 	char nombre[20];
@@ -20,6 +21,7 @@ void registro(){
 	char tipo;
 	int i = 0;
 	int sel = 0;
+	int ok;
 
 	while(sel != 1){
 
@@ -54,9 +56,11 @@ void registro(){
 	printf("Nombre:%s, Apellidos:%s, DNI:%i, Tarjeta:%i, Telefono:%i, Nombre de usuario:%s, Contraseña:%s, Tipo:%c", nombre,apellidos,DNI,tarjeta,telefono,username,contrasena,tipo);
 	fflush(stdout);
 
+	ok = insertNewUser(db, nombre, username, apellidos, contrasena, tipo, DNI, tarjeta, telefono);
+
 	//Aqui se hace el registro en BD del usuario
 
-	if(i == 0){
+	if(ok == 0){
 		// Todo a ido bien se ha registrado el usuario
 		iniciarSesion();
 		sel = 1;

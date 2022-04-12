@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include "inicio.h"
 
-void inicio(){
+void inicio(sqlite3 *db){
 
 	int sel = 0;
 	printf("¡BIENVENIDO A DEUSTOTAQUILLAS!\n");
@@ -36,7 +36,7 @@ void inicio(){
 
 		case 2:
 
-			registro();
+			registro(&db);
 
 		break;
 
