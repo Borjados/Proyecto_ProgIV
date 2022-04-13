@@ -2,19 +2,20 @@
 #include <stdlib.h>
 #include "estadisticas.h"
 #include "admin.h"
+#include "../dbManager/consultas.h"
 
 
 void estadisticas(sqlite3 *db){
-	int sel; //selección
-	printf("MENÚ ESTADÍSTICAS\n");
+	int sel; //seleccion
+	printf("MENU ESTADASTICAS\n");
 	fflush(stdout);
 	printf("------------------------------\n");
 	fflush(stdout);
-	printf("1.Tarifa más solicitada\n");
+	printf("1.Tarifa mas solicitada\n");
 	fflush(stdout);
-	printf("2.Tipo de usuario más común\n");
+	printf("2.Tipo de usuario mas comun\n");
 	fflush(stdout);
-	printf("3.Usuarios más frecuentes\n");
+	printf("3.Usuarios mas frecuentes\n");
 	fflush(stdout);
 	printf("4.Volver\n");
 	fflush(stdout);
@@ -32,7 +33,6 @@ void estadisticas(sqlite3 *db){
 	} else if(sel==4) {
 		adminInicio(db);
 	} else {
-		printf("ya me joderia");
 		estadisticas(db);
 	}
 

@@ -25,14 +25,14 @@ void bonos(sqlite3 *db){
 		fflush(stdout);
 		printf("------------------------------\n");
 		fflush(stdout);
-		printf("El descuento actual es de: %f\n");
+		printf("El descuento actual es de: %f\n"); //TODO no hay valor de descuento
 		fflush(stdout);
 
 		scanf(" %i", &sel);
 
 		if(sel==1) {
 
-			printf("Que precio quieres poner al bono diario?");
+			printf("Que descuento quieres poner al bono diario?");
 			fflush(stdout);
 			scanf(" %i", &precio);
 
@@ -42,7 +42,7 @@ void bonos(sqlite3 *db){
 
 		} else if(sel==2) {
 
-			printf("Que precio quieres poner al bono semanal?");
+			printf("Que descuento quieres poner al bono semanal?");
 			fflush(stdout);
 			scanf(" %i", &precio);
 
@@ -52,7 +52,7 @@ void bonos(sqlite3 *db){
 
 		} else if(sel==3) {
 
-			printf("Que precio quieres poner al bono bisemanal?");
+			printf("Que descuento quieres poner al bono bisemanal?");
 			fflush(stdout);
 			scanf(" %i", &precio);
 
@@ -62,7 +62,7 @@ void bonos(sqlite3 *db){
 
 		} else if(sel==4) {
 
-			printf("Que precio quieres poner al bono mensual?");
+			printf("Que descuento quieres poner al bono mensual?");
 			fflush(stdout);
 			scanf(" %i", &precio);
 
@@ -72,7 +72,7 @@ void bonos(sqlite3 *db){
 
 		} else if(sel==5) {
 
-			printf("Que precio quieres poner al bono cuatrimestral?");
+			printf("Que descuento quieres poner al bono cuatrimestral?");
 			fflush(stdout);
 			scanf(" %i", &precio);
 

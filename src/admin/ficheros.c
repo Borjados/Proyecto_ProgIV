@@ -5,7 +5,7 @@
 
 void ficheros(sqlite3 *db){
 
-	int sel; //selección
+	int sel; //seleccion
 	printf("FICHEROS\n");
 	fflush(stdout);
 	printf("------------------------------\n");

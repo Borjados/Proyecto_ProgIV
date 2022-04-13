@@ -9,7 +9,7 @@
 void inicio(sqlite3 *db){
 
 	int sel = 0;
-	printf("�BIENVENIDO A DEUSTOTAQUILLAS!\n");
+	printf("!BIENVENIDO A DEUSTOTAQUILLAS!\n");
 	fflush(stdout);
 	printf("------------------------------\n");
 	fflush(stdout);

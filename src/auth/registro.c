@@ -7,7 +7,8 @@
 
 void registro(sqlite3 *db){
 
-	int seleccion, DNI, tarjeta, telefono, selecadmin, bono;
+	int seleccion, tarjeta, telefono, selecadmin, bono;
+    char DNI[10];
 	char nombre[20];
 	char username[20];
 	char apellidos[30];
@@ -15,7 +16,7 @@ void registro(sqlite3 *db){
 	char tipo;
 	int i = 0;
 	int sel = 0;
-	int ok;
+	int ok = 0;
 
 	while(sel != 1){
 
@@ -31,7 +32,7 @@ void registro(sqlite3 *db){
 	scanf(" %s", apellidos);
 	printf("Introduzca su DNI: ");
 	fflush(stdout);
-	scanf(" %i", &DNI);
+	scanf(" %s", DNI);
 	printf("Introduzca su Tarjeta: ");
 	fflush(stdout);
 	scanf(" %i", &tarjeta);
@@ -41,17 +42,18 @@ void registro(sqlite3 *db){
 	printf("Introduzca su nombre de usuario: ");
 	fflush(stdout);
 	scanf(" %s", username);
-	printf("Introduzca su contrase�a: ");
+	printf("Introduzca su contrasena: ");
 	fflush(stdout);
 	scanf(" %s", contrasena);
-	printf("Es profersor(p),Estudiante(e) o Regular(r): ");
+	printf("Es profesor(p),Estudiante(e) o Regular(r): ");
 	fflush(stdout);
 	scanf(" %s", &tipo);
-	printf("Nombre:%s, Apellidos:%s, DNI:%i, Tarjeta:%i, Telefono:%i, Nombre de usuario:%s, Contrase�a:%s, Tipo:%c", nombre,apellidos,DNI,tarjeta,telefono,username,contrasena,tipo);
+	printf("Nombre:%s, Apellidos:%s, DNI:%s, Tarjeta:%i, Telefono:%i, Nombre de usuario:%s, Cotrasena:%s, Tipo:%c", nombre,apellidos,DNI,tarjeta,telefono,username,contrasena,tipo);
 	fflush(stdout);
 
-	ok = insertNewUser(db, nombre, username, apellidos, contrasena, tipo, DNI, tarjeta, telefono);
-
+    printf("a");
+	//ok = insertNewUser(db, nombre, username, apellidos, contrasena, tipo, DNI, tarjeta, telefono);//TODO error aqui, no pasa
+    //printf("%i", ok);
 	//Aqui se hace el registro en BD del usuario
 
 	if(ok == 0){

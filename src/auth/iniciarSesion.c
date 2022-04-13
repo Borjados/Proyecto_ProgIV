@@ -4,9 +4,8 @@
 #include "registro.h"
 #include "../admin/admin.h"
 
-void iniciarSesion(sqlite3 *db){
+void iniciarSesion(sqlite3 *db){//TODO implementar el uso de la bd de usuarios
 
-	int i = 2;
 	char nombre[20];
 	char contrasena[20];
 
@@ -17,19 +16,20 @@ void iniciarSesion(sqlite3 *db){
 	printf("Introduzca su nombre: ");
 	fflush(stdout);
 	scanf(" %s", nombre);
-	printf("Introduzca su contrase�a: ");
+	printf("Introduzca su contrasena: ");
 	fflush(stdout);fflush(stdout);
 	scanf(" %s", contrasena);
-	printf("Nombre:%s, Contrase�a:%s", nombre, contrasena);
+	printf("Nombre:%s, Contrasena:%s", nombre, contrasena);
 	fflush(stdout);
 
-	if(i == 1){
+
+	if(strcmp(nombre, "b") && strcmp(contrasena, "b")){
 		//Aqui es para la consulta de si el usuario esta registrado, entonces sigue el programa, si no pasa al else
 		//Usuario Normal
 		printf("No disponible :(");
 		fflush(stdout);
 	}
-	else if(i == 2){
+	else if(strcmp(nombre, "a") && strcmp(contrasena, "a")){
 		//Aqui es para la consulta de si el usuario esta registrado, entonces sigue el programa, si no pasa al else
 		//Administrador
 		adminInicio(db);

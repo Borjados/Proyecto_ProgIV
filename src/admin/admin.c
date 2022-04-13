@@ -8,11 +8,11 @@
 
 void adminInicio(sqlite3 *db){
 
-	printf("�BIENVENIDO ADMINISTRADOR!\n");
+	printf("BIENVENIDO ADMINISTRADOR!\n");
 	fflush(stdout);
 	printf("------------------------------\n");
 	fflush(stdout);
-	printf("1.Ver estad�sticas\n");
+	printf("1.Ver estadasticas\n");
 	fflush(stdout);
 	printf("2.Modificar Bonos\n");
 	fflush(stdout);
@@ -21,7 +21,7 @@ void adminInicio(sqlite3 *db){
 	printf("4.Salir\n");
 	fflush(stdout);
 
-	int sel; //selecci�n
+	int sel; //seleccion
 	scanf(" %i", &sel);
 
 	if(sel==1) {

@@ -110,7 +110,7 @@ int newInicio(sqlite3 *db, char nombre[], char contrasena) {
 
 			printf("Prepared statement finalized (SELECT)\n");
 
-			if (contrasena == contrasenya) {
+			if (contrasena == contrasenya) {//TODO Los string nunca se comparan con ==
 				if (tipo_usuario == "estudiante" || tipo_usuario == "regular" || tipo_usuario == "profesor") {
 					result = 1;
 				} else if (tipo_usuario == "Administrador") {
@@ -134,7 +134,7 @@ void tarifaMasUsada(sqlite3 *db){
 		printf("Error preparing statement (INSERT)\n");
 		printf("%s\n", sqlite3_errmsg(db));
 	}
-	printf("La tarifa m�s solicitada es el...\n");
+	printf("La tarifa mas solicitada es el...\n");
 	result = sqlite3_step(stmt);
 	if (result == SQLITE_ROW) {
 		int id = sqlite3_column_int(stmt, 0);
@@ -168,7 +168,7 @@ void usuarioMasComun(sqlite3 *db){
 		printf("%s\n", sqlite3_errmsg(db));
 	}
 
-	printf("El tipo de usuario m�s com�n es...\n");
+	printf("El tipo de usuario mas comun es...\n");
 	result = sqlite3_step(stmt);
 	if (result == SQLITE_ROW) {
 		char *id = sqlite3_column_text(stmt, 0);
