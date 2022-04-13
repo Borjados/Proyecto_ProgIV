@@ -3,14 +3,16 @@
 #include "admin.h"
 #include "estadisticas.h"
 #include "../auth/inicio.h"
+#include "ficheros.h"
+#include "bonos.h"
 
 void adminInicio(sqlite3 *db){
 
-	printf("¡BIENVENIDO ADMINISTRADOR!\n");
+	printf("ï¿½BIENVENIDO ADMINISTRADOR!\n");
 	fflush(stdout);
 	printf("------------------------------\n");
 	fflush(stdout);
-	printf("1.Ver estadísticas\n");
+	printf("1.Ver estadï¿½sticas\n");
 	fflush(stdout);
 	printf("2.Modificar Bonos\n");
 	fflush(stdout);
@@ -19,7 +21,7 @@ void adminInicio(sqlite3 *db){
 	printf("4.Salir\n");
 	fflush(stdout);
 
-	int sel; //selección
+	int sel; //selecciï¿½n
 	scanf(" %i", &sel);
 
 	if(sel==1) {

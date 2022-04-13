@@ -2,16 +2,16 @@
 #include <stdlib.h>
 #include "bonos.h"
 #include "admin.h"
-#include "dbManager/consultas.h"
+#include "../dbManager/consultas.h"
 
 void bonos(sqlite3 *db){
-	int sel; //selección
+	int sel; //selecciï¿½n
 	int precio;
 		printf("BONOS\n");
 		fflush(stdout);
 		printf("------------------------------\n");
 		fflush(stdout);
-		printf("1.1 día\n");
+		printf("1.1 dï¿½a\n");
 		fflush(stdout);
 		printf("2.1 semana\n");
 		fflush(stdout);

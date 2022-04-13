@@ -1,5 +1,6 @@
 #include "consultas.h"
 #include <stdio.h>
+#include <string.h>
 
 int insertNewUser(sqlite3 *db, char nombre[], char username[], char apellidos[], char contrasena[], char tipo, int DNI, int tarjeta, int telefono){
 	sqlite3_stmt *stmt;
@@ -95,8 +96,8 @@ int newInicio(sqlite3 *db, char nombre[], char contrasena) {
 		result = sqlite3_step(stmt);
 		if (result == SQLITE_ROW) {
 			strcpy(contrasenya, (char*) sqlite3_column_text(stmt, 0));
-			strcpy(tipo_usuario, (char *) sqlite3_column_text(stmt, 1);
-					printf("ID: %d Name: %s\n", id, name);
+			strcpy(tipo_usuario, (char *) sqlite3_column_text(stmt, 1));
+//					printf("ID: %d Name: %s\n", id, name); //TODO $id y $name no estan inicializadas, no existen
 				}
 			} while (result == SQLITE_ROW);
 
@@ -133,7 +134,7 @@ void tarifaMasUsada(sqlite3 *db){
 		printf("Error preparing statement (INSERT)\n");
 		printf("%s\n", sqlite3_errmsg(db));
 	}
-	printf("La tarifa más solicitada es el...\n");
+	printf("La tarifa mï¿½s solicitada es el...\n");
 	result = sqlite3_step(stmt);
 	if (result == SQLITE_ROW) {
 		int id = sqlite3_column_int(stmt, 0);
@@ -167,7 +168,7 @@ void usuarioMasComun(sqlite3 *db){
 		printf("%s\n", sqlite3_errmsg(db));
 	}
 
-	printf("El tipo de usuario más común es...\n");
+	printf("El tipo de usuario mï¿½s comï¿½n es...\n");
 	result = sqlite3_step(stmt);
 	if (result == SQLITE_ROW) {
 		char *id = sqlite3_column_text(stmt, 0);

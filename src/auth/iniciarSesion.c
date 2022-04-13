@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "iniciarSesion.h"
+#include "registro.h"
+#include "../admin/admin.h"
 
 void iniciarSesion(sqlite3 *db){
 
@@ -15,10 +17,10 @@ void iniciarSesion(sqlite3 *db){
 	printf("Introduzca su nombre: ");
 	fflush(stdout);
 	scanf(" %s", nombre);
-	printf("Introduzca su contraseña: ");
+	printf("Introduzca su contraseï¿½a: ");
 	fflush(stdout);fflush(stdout);
 	scanf(" %s", contrasena);
-	printf("Nombre:%s, Contraseña:%s", nombre, contrasena);
+	printf("Nombre:%s, Contraseï¿½a:%s", nombre, contrasena);
 	fflush(stdout);
 
 	if(i == 1){
@@ -35,7 +37,7 @@ void iniciarSesion(sqlite3 *db){
 	else{
 		printf("\nDebes registrarte primero\n");
 		fflush(stdout);
-		registro();
+		registro(db);
 	}
 
 }
