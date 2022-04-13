@@ -1,0 +1,6 @@
+{
+    "usuarioAdmin": "admin",
+    "contrasenyaAdmin": "admin",
+    "nombreBD": "dbproyecto.db",
+    "rutaBD": ".."
+}
