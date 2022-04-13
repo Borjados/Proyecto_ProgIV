@@ -76,7 +76,7 @@ int updateBonos(sqlite3 *db, char tipo, int precio){
 	return SQLITE_OK;
 }
 
-int newInicio(sqlite3 *db, char nombre[], char contrasena) {
+int newInicio(sqlite3 *db, char *nombre, char *contrasena, int *valor) {
 	sqlite3_stmt *stmt;
 	char sql[] =
 			"Select contrasenya, tipo_usuario from Usuario where username = ?";
@@ -110,14 +110,14 @@ int newInicio(sqlite3 *db, char nombre[], char contrasena) {
 
 			printf("Prepared statement finalized (SELECT)\n");
 
-			if (contrasena == contrasenya) {//TODO Los string nunca se comparan con ==
-				if (tipo_usuario == "estudiante" || tipo_usuario == "regular" || tipo_usuario == "profesor") {
-					result = 1;
-				} else if (tipo_usuario == "Administrador") {
-					result = 2;
+			if (strcmp(contrasena,contrasenya)) {
+				if (strcmp(tipo_usuario,"estudiante") || strcmp(tipo_usuario,"regular") || strcmp(tipo_usuario,"profesor")) {
+					*valor = 1;
+				} else if (strcmp(tipo_usuario,"administrador") {
+					*valor = 2;
 				}
 			} else {
-				result = 3;
+				*valor = 3;
 			}
 
 			return result;
