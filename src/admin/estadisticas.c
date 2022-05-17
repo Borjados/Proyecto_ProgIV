@@ -1,39 +1,55 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include "estadisticas.h"
-#include "admin.h"
-#include "../dbManager/consultas.h"
+#include "cliente.h"
 
+void tarifaMasSolicitada(){
+    //llamar a la bd --> count
+    int t = 0;
 
-void estadisticas(sqlite3 *db){
-	int sel; //seleccion
-	printf("MENU ESTADASTICAS\n");
-	fflush(stdout);
-	printf("------------------------------\n");
-	fflush(stdout);
-	printf("1.Tarifa mas solicitada\n");
-	fflush(stdout);
-	printf("2.Tipo de usuario mas comun\n");
-	fflush(stdout);
-	printf("3.Usuarios mas frecuentes\n");
-	fflush(stdout);
-	printf("4.Volver\n");
-	fflush(stdout);
-	printf("------------------------------\n");
-	fflush(stdout);
+    switch(t)
+    {
+        case 0:
+            printf("La tarifa mas solicitada es la de 1 dia");
+            break;
+        case 1:
+            printf("La tarifa mas solicitada es el de 1 semana");
+            break;
+        case 2:
+            printf("La tarifa mas solicitada es la de 2 semanas");
+            break;
+        case 3:
+            printf("La tarifa mas solicitada es la de 1 mes");
+            break;
+        case 4:
+            printf("La tarifa mas solicitada es la de 1 cuatrimestre");
+            break;     
+    }
+}
 
-	scanf(" %i", &sel);
+void usuarioMasComun(){
+    //los usarios los clasificamos por p, e, r
+    char u = 'p';
 
-	if(sel==1) {
-		tarifaMasUsada(db);
-	} else if(sel==2) {
-		usuarioMasComun(db);
-	} else if(sel==3) {
+    switch(u)
+    {
+        case 'p':
+            printf("Los usuarios mas comunes son los profesores");
+            break;
+        case 'e':
+            printf("Los usuarios mas comunes son los estudiantes");
+            break;
+        case 'r':
+            printf("Los usuarios mas comunes son los regulares");
+            break;    
+    }
+}
 
-	} else if(sel==4) {
-		adminInicio(db);
-	} else {
-		estadisticas(db);
-	}
+void usuariosMasFrecuentes(){
+    Cliente* c; //array desde la bd
 
+    for (int i = 0; i < 5; i++) //queremos top 5 clientes
+    {
+        printf("%d) %d", i+1, c[i].dni);
+    }
+    
 }

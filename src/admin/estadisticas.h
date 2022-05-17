@@ -1,8 +1,10 @@
-#ifndef ADMIN_ESTADISTICAS_H_
-#define ADMIN_ESTADISTICAS_H_
+#ifndef ESTADISTICAS_H_
+#define ESTADISTICAS_H_
 
-#include "../../lib/sqlite3/sqlite3.h"
+#include <stdio.h>
 
-void estadisticas(sqlite3 *db);
+void tarifaMasSolicitada(void);
+void usuarioMasComun(void);
+void usuariosMasFrecuentes(void);
 
-#endif /* ADMIN_ESTADISTICAS_H_ */
+#endif
