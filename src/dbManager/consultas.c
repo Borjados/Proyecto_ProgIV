@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-int insertNewUser(sqlite3 *db, char nombre[], char username[], char apellidos[], char contrasena[], char tipo, int DNI, int tarjeta, int telefono){
+int insertNewUser(sqlite3 *db, char nombre[], char username[], char apellidos[], char contrasena[], char tipo[], int DNI, int tarjeta, int telefono){
 	sqlite3_stmt *stmt;
 
 		char sql[] = "insert into Usuario (dni, username, nombre, apellidos, num_tarjeta, contrasenya, telefono, tipo_usuario) values (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -43,7 +43,7 @@ int insertNewUser(sqlite3 *db, char nombre[], char username[], char apellidos[],
 		return SQLITE_OK;
 }
 
-int updateBonos(sqlite3 *db, char tipo, int precio){
+int updateBonos(sqlite3 *db, char tipo[], int precio){
 	sqlite3_stmt *stmt;
 
 	char sql[] = "UPDATE Bono SET precio=? WHERE tipo_bono=?";
@@ -113,7 +113,7 @@ int newInicio(sqlite3 *db, char *nombre, char *contrasena, int *valor) {
 			if (strcmp(contrasena,contrasenya)) {
 				if (strcmp(tipo_usuario,"estudiante") || strcmp(tipo_usuario,"regular") || strcmp(tipo_usuario,"profesor")) {
 					*valor = 1;
-				} else if (strcmp(tipo_usuario,"administrador") {
+				} else if (strcmp(tipo_usuario,"administrador")) {
 					*valor = 2;
 				}
 			} else {
@@ -171,7 +171,7 @@ void usuarioMasComun(sqlite3 *db){
 	printf("El tipo de usuario mas comun es...\n");
 	result = sqlite3_step(stmt);
 	if (result == SQLITE_ROW) {
-		char *id = sqlite3_column_text(stmt, 0);
+		const char *id = sqlite3_column_text(stmt, 0); //TODO el tipo de id no es válido, recibe "const unsigned char*", pero la parte de unsigned no nos interesa
 
 		if (strcmp(id, "estudiante") == 0) {
 			printf("Estudiante.");

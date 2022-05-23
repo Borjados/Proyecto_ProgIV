@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "ficheros.h"
-#include "admin.h"
+#include "menuAdmin.h"
 
 void ficheros(sqlite3 *db){
 
@@ -28,7 +28,7 @@ void ficheros(sqlite3 *db){
 	} else if(sel==2) {
 
 	} else if(sel==3) {
-		adminInicio(db);
+		//adminInicio(db); TODO volver al inicio
 	} else {
 		ficheros(db);
 	}

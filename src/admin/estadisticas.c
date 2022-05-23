@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "estadisticas.h"
-#include "cliente.h"
+//#include "cliente.h"
 
 void tarifaMasSolicitada(){
     //llamar a la bd --> count
@@ -45,11 +45,12 @@ void usuarioMasComun(){
 }
 
 void usuariosMasFrecuentes(){
-    Cliente* c; //array desde la bd
-
-    for (int i = 0; i < 5; i++) //queremos top 5 clientes
-    {
-        printf("%d) %d", i+1, c[i].dni);
-    }
-    
+//    Cliente* c; //array desde la bd
+//    //TODO falta crear la clase Cliente, esta parte deberia estar en el cliente, y el servior lo que hará será devolver los campos por separado
+//
+//    for (int i = 0; i < 5; i++) //queremos top 5 clientes
+//    {
+//        printf("%d) %d", i+1, c[i].dni); //esto deberia de funcionar en c++, pero en c no tenemos clases
+//    }
+//
 }

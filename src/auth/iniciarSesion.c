@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "iniciarSesion.h"
 #include "registro.h"
-#include "../admin/admin.h"
+#include "../admin/menuAdmin.h"
 
 void iniciarSesion(sqlite3 *db){//TODO implementar el uso de la bd de usuarios
 
@@ -32,7 +33,7 @@ void iniciarSesion(sqlite3 *db){//TODO implementar el uso de la bd de usuarios
 	else if(strcmp(nombre, "a") && strcmp(contrasena, "a")){
 		//Aqui es para la consulta de si el usuario esta registrado, entonces sigue el programa, si no pasa al else
 		//Administrador
-		adminInicio(db);
+		//adminInicio(db); todo volver al inicio
 	}
 	else{
 		printf("\nDebes registrarte primero\n");

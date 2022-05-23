@@ -2,10 +2,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include "menuAdmin.h"
-#include "menuAuth.h"
-#include "../domain/bono.h"
-#include "../domain/cliente.h"
-#include "../domain/estadisticas.h"
+//#include "menuAuth.h"
+#include "bonos.h"
+//#include "cliente.h"
+#include "estadisticas.h"
+//#include "../domain/bonos.h"
+//#include "../domain/cliente.h"
+//#include "../domain/estadisticas.h"
+
 
 typedef enum { false, true } bool;
 
@@ -17,13 +21,14 @@ void initAdmin()
         selectOptionAdmin(opcion);
     } while (opcion != 0);
 
-    initAuth();
+    //initAuth();       //función sin declarar
 }
 
 int selectMenuOptionAdmin() {
-    int read;
+    char str[1], read;
+    //int read;
     char option;
-    bool rigth;
+    bool right;
 
     do {
         printf("\n+---------------------------------------------+\n");
@@ -37,21 +42,22 @@ int selectMenuOptionAdmin() {
         printf("\nSelecciona una opcion: ");
         read = scanf("%c", &option);
 
+
         if (read != 1 || option == '\n' || option - '0' < 0 || option - '0' > 2) {
-            cleanStdin();
-            system("cls");
+            //cleanStdin();         //función sin declarar
+            //system("cls");        //función sin declarar
             printf("\nValor incorrecto, debe estar entre 0 y 2.\n");
-            rigth = false;
-        } else rigth = true;
-    } while (!rigth);
+            right = false;
+        } else right = true;
+    } while (!right);
 
     return option - '0';
 }
 
 void selectOptionAdmin(int option)
 {
-    cleanStdin();
-    system("cls");
+//    cleanStdin();         //función sin declarar
+//    system("cls");        //función sin declarar
     switch (option)
     {
     case 1:
@@ -82,8 +88,8 @@ void menuEstadisticas() {
         read = scanf("%c", &option);
 
         if (read != 1 || option == '\n' || option - '0' < 0 || option - '0' > 3) {
-            cleanStdin();
-            system("cls");
+//            cleanStdin();     Mismo que antes
+//            system("cls");
             printf("\nValor incorrecto, debe estar entre 0 y 3.\n");
             rigth = false;
         } else rigth = true;
@@ -131,15 +137,15 @@ void menuBonos() {
         read = scanf("%c", &option);
 
         if (read != 1 || option == '\n' || option - '0' < 0 || option - '0' > 5) {
-            cleanStdin();
-            system("cls");
+//            cleanStdin();
+//            system("cls");
             printf("\nValor incorrecto, debe estar entre 0 y 5.\n");
             rigth = false;
         } else rigth = true;
     } while (!rigth);
 
     int sel = option - '0';
-    cleanStdin();
+//    cleanStdin();
 
     switch (sel)
     {

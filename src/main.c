@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "admin/admin.h"
+#include "admin/menuAdmin.h"
 #include "../lib/sqlite3/sqlite3.h"
 #include "auth/inicio.h"
 #include "cfg/cfg.h"
