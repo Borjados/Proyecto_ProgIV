@@ -3,6 +3,6 @@
 
 #include "../../lib/sqlite3/sqlite3.h"
 
-void inicio(sqlite3 *db);
+void inicio(sqlite3 *db, int *running);
 
 #endif /* ADMIN_INICIO_H_ */

@@ -6,7 +6,7 @@
 
 
 
-void inicio(sqlite3 *db){
+void inicio(sqlite3 *db, int *running){
 
 	int sel = 0;
 	printf("!BIENVENIDO A DEUSTOTAQUILLAS!\n");
@@ -38,7 +38,7 @@ void inicio(sqlite3 *db){
 		break;
 
 		case 3:
-
+            *running = 1;
 			exit(-1);
 
 		break;

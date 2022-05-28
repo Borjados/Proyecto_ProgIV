@@ -6,6 +6,7 @@
 #include "bonos.h"
 //#include "cliente.h"
 #include "estadisticas.h"
+#include "../dbManager/consultas.h"
 //#include "../domain/bonos.h"
 //#include "../domain/cliente.h"
 //#include "../domain/estadisticas.h"
@@ -101,15 +102,15 @@ void menuEstadisticas() {
     {//comentado para q no crashee falta bd
     case 1:
         printf("%d", sel);
-        //tarifaMasSolicitada();
+//        tarifaMasUsada(); //TODO poner puntero a db
         break;
     case 2:
         printf("%d", sel);
-        //usuarioMasComun();
+//        usuarioMasComun();//TODO poner puntero a db
         break;
     case 3:
         printf("%d", sel);
-        //usuariosMasFrecuentes();
+        usuariosMasFrecuentes();
         break;
     }
 }

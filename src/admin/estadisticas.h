@@ -3,8 +3,8 @@
 
 #include <stdio.h>
 
-void tarifaMasSolicitada(void);
-void usuarioMasComun(void);
+//void tarifaMasSolicitada(void);
+//void usuarioMasComun(void);
 void usuariosMasFrecuentes(void);
 
 #endif
