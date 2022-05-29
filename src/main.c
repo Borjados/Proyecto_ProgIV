@@ -171,10 +171,17 @@ int main(){
     				    break;
     				case 9:
     				    cont = 0;
-                        int dni = atoi(DNI); //La función de debajo pide int, no char[]
                         int card = atoi(tarjeta);
                         int tel = atoi(telefono);
-    				    insertNewUser(db, nombre, username, apellidos, contrasena, &tipo, dni, card, tel);
+    				    int ret = insertNewUser(db, nombre, username, apellidos, contrasena, &tipo, DNI, card, tel);
+    				    if(ret == 0){
+    				    	strcpy(sendBuff, "OK");
+    				    	send(s, sendBuff, sizeof(sendBuff), 0);
+    				    }
+    				    else{
+    				    	strcpy(sendBuff, "ERROR");
+    				    	send(s, sendBuff, sizeof(sendBuff), 0);
+    				    }
     				    recv(s, recvBuff, sizeof(recvBuff), 0);
     				    break;
     				}

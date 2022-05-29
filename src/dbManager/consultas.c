@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-int insertNewUser(sqlite3 *db, char nombre[], char username[], char apellidos[], char contrasena[], char tipo[], int DNI, int tarjeta, int telefono){
+int insertNewUser(sqlite3 *db, char nombre[], char username[], char apellidos[], char contrasena[], char tipo[], char DNI[], int tarjeta, int telefono){
 	sqlite3_stmt *stmt;
 
 		char sql[] = "insert into Usuario (dni, username, nombre, apellidos, num_tarjeta, contrasenya, telefono, tipo_usuario) values (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -15,7 +15,7 @@ int insertNewUser(sqlite3 *db, char nombre[], char username[], char apellidos[],
 
 		printf("SQL query prepared (INSERT)\n");
 
-		sqlite3_bind_int(stmt, 1, DNI);
+		sqlite3_bind_text(stmt, 1, DNI, strlen(DNI), SQLITE_STATIC);
 		sqlite3_bind_text(stmt, 2, username, strlen(username), SQLITE_STATIC);
 		sqlite3_bind_text(stmt, 3, nombre, strlen(nombre), SQLITE_STATIC);
 		sqlite3_bind_text(stmt, 4, apellidos, strlen(apellidos), SQLITE_STATIC);
@@ -27,6 +27,8 @@ int insertNewUser(sqlite3 *db, char nombre[], char username[], char apellidos[],
 
 		result = sqlite3_step(stmt);
 		if (result != SQLITE_DONE) {
+			printf("%s\n", sqlite3_errmsg(db));
+			printf("%d\n", result);
 			printf("Error inserting new data into usuario table\n");
 			return result;
 		}
