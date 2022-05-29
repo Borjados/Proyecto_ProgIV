@@ -166,8 +166,20 @@ int main(){
     		        		break;
     		        }
     		    }
-    		}else if(strcmp(recvBuff, "STAT_TARIFA") == 0){}//TODO completar las funciones y crear las peticiones en el cliente
-            else if(strcmp(recvBuff, "STAT_COMM_USER") == 0){}
+    		}else if(strcmp(recvBuff, "STAT_TARIFA") == 0){
+    			recv(s, recvBuff, sizeof(recvBuff), 0);
+    			while(strcmp(recvBuff, "STAT_TARIFA-END") != 0){
+    				tarifaMasUsada(db);
+    				void usuarioMasComun(sqlite3 *db);
+    			}
+    		}//TODO completar las funciones y crear las peticiones en el cliente
+            else if(strcmp(recvBuff, "STAT_COMM_USER") == 0){
+            	recv(s, recvBuff, sizeof(recvBuff), 0);
+            	while(strcmp(recvBuff, "STAT_COMM_USER") != 0){
+            		usuarioMasComun(db);
+            	}
+            }
+            else if(strcmp(recvBuff, "STAT_FREQ_USER") == 0){}
             else if(strcmp(recvBuff, "UPDATE_BONOS") == 0){}
             else if(strcmp(recvBuff, "ALQUILAR") == 0){}
             else if(strcmp(recvBuff, "DEVOLVER") == 0){}
