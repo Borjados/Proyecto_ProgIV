@@ -13,6 +13,8 @@
 int main(){
     int running = 0;
 
+    char sendBuff[512], recvBuff[512];
+
     Config config;
     int error = leer_configuracion(&config);
     if (error) {
@@ -54,11 +56,117 @@ int main(){
 
 	printf("Database opened\n") ;
     while(running == 0){
-	    inicio(db, &running);
+	    //inicio(db, &running);
         //TODO colocar el socket escuchando al cliente
 
 
+    	//TODO lo que esta aqui comentado son los comandos que tiene el server para llamar a BD, lo he compilado y tira pero lo comento por si acaso
+    	/*printf("Waiting for incoming commands from client... \n");
 
+    	do{
+    		recv(s, recvBuff, sizeof(recvBuff), 0);
+
+    		printf("Command received: %s \n", recvBuff);
+
+    		if(strcmp(recvBuff, "REGISTRO") == 0){
+    			int selecadmin, bono;
+    			char DNI[10];
+    			char nombre[20];
+    			char username[20];
+    			char apellidos[30];
+    			char contrasena[20];
+    			char tarjeta[20];
+    			char telefono[20];
+    			char tipo;
+    			int cont = 0;
+
+    			recv(s, recvBuff, sizeof(recvBuff), 0);
+
+    			while(strcmp(recvBuff, "REGISTRO-END") != 0){
+    				switch (cont){
+    				case 1:
+    					cont = cont + 1;
+    					strcpy(nombre,recvBuff);
+    					recv(s, recvBuff, sizeof(recvBuff), 0);
+    					break;
+    				case 2:
+    				    cont = cont + 1;
+    				    strcpy(apellidos,recvBuff);
+    				    recv(s, recvBuff, sizeof(recvBuff), 0);
+    				    break;
+    				case 3:
+    				    cont = cont + 1;
+    				    strcpy(DNI,recvBuff);
+    				    recv(s, recvBuff, sizeof(recvBuff), 0);
+    				    break;
+    				case 4:
+    				    cont = cont + 1;
+    				    strcpy(tarjeta,recvBuff);
+    				    recv(s, recvBuff, sizeof(recvBuff), 0);
+    				    break;
+    				case 5:
+    				    cont = cont + 1;
+    				    strcpy(telefono,recvBuff);
+    				    recv(s, recvBuff, sizeof(recvBuff), 0);
+    				    break;
+    				case 6:
+    				    cont = cont + 1;
+    				    strcpy(username,recvBuff);
+    				    recv(s, recvBuff, sizeof(recvBuff), 0);
+    				    break;
+    				case 7:
+    				    cont = cont + 1;
+    				    strcpy(contrasena,recvBuff);
+    				    recv(s, recvBuff, sizeof(recvBuff), 0);
+    				    break;
+    				case 8:
+    				    cont = cont + 1;
+    				    strcpy(tipo,recvBuff);
+    				    recv(s, recvBuff, sizeof(recvBuff), 0);
+    				    break;
+    				case 9:
+    				    cont = 0;
+    				    insertNewUser(db, nombre, username, apellidos, contrasena, tipo, DNI, tarjeta, telefono);
+    				    recv(s, recvBuff, sizeof(recvBuff), 0);
+    				    break;
+    				}
+
+    			}
+
+    		}
+    		else if(strcmp(recvBuff, "INICIO") == 0){
+    			char nombre[20];
+    		    char contrasena[20];
+    		    int cont = 0;
+    		    int valor;
+
+    		    recv(s, recvBuff, sizeof(recvBuff), 0);
+
+    		    while(strcmp(recvBuff, "INICIO-END") != 0){
+    		    	switch (cont){
+    		        	case 1:
+    		        		cont = cont + 1;
+    		        		strcpy(nombre,recvBuff);
+    		        		recv(s, recvBuff, sizeof(recvBuff), 0);
+    		        		break;
+    		        	case 2:
+    		        		cont = cont + 1;
+    		        		strcpy(contrasena,recvBuff);
+    		        		recv(s, recvBuff, sizeof(recvBuff), 0);
+    		        		break;
+    		        	case 3:
+    		        		cont = 0;
+    		        		newInicio(db, nombre, contrasena, valor);
+    		        		recv(s, recvBuff, sizeof(recvBuff), 0);
+    		        		break;
+    		        }
+    		    }
+    		}
+    	}while (1);
+
+
+
+*/
     }
 
 	sqlite3_close(db);
