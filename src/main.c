@@ -92,7 +92,7 @@ int main(){
 	closesocket(conn);
 
 
-	int result = sqlite3_open("../dbproyecto.db", &db);
+	int result = sqlite3_open("dbproyecto.db", &db);
 
 	if (result != SQLITE_OK) {
 		printf("Error opening database\n");
@@ -123,7 +123,7 @@ int main(){
     			char tarjeta[20];
     			char telefono[20];
     			char tipo;
-    			int cont = 0;
+    			int cont = 1;
 
     			recv(s, recvBuff, sizeof(recvBuff), 0);
 
