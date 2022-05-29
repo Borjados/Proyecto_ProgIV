@@ -8,27 +8,30 @@
 #include <winsock2.h>
 #include "dbManager/consultas.h"
 
-
+#define SERVER_IP "127.0.0.1"
+#define SERVER_PORT 6000
 
 #pragma comment(lib,"ws2_32.lib") //Winsock Library
 
 int main(){
     int running = 0;
-
     char sendBuff[512], recvBuff[512];
+	struct sockaddr_in server;
+	struct sockaddr_in client;
 
-    Config config;
+    /*Config config;
     int error = leer_configuracion(&config);
     if (error) {
         printf("Error loading config file\n");
         exit(error);
     }
-    printf("Credenciales: %s, %s\n", config.usuarioAdmin, config.contrasenyaAdmin);
+    printf("Credenciales: %s, %s\n", config.usuarioAdmin, config.contrasenyaAdmin);*/
 
 	sqlite3 *db;
 
     //Initialize winsock
     WSADATA wsa;
+    SOCKET conn;
     SOCKET s;
 
     printf("\nInitialising Winsock...");
@@ -41,12 +44,52 @@ int main(){
     printf("Initialised.");
 
     //Create TCP socket
-    if((s = socket(AF_INET , SOCK_STREAM , 0 )) == INVALID_SOCKET)
+    if((conn = socket(AF_INET , SOCK_STREAM , 0 )) == INVALID_SOCKET)
     {
         printf("Could not create socket : %d" , WSAGetLastError());
     }
 
     printf("Socket created.\n");
+
+	server.sin_addr.s_addr = inet_addr(SERVER_IP);
+	server.sin_family = AF_INET;
+	server.sin_port = htons(SERVER_PORT);
+
+	//BIND (the IP/port with socket)
+	if (bind(conn, (struct sockaddr*) &server,
+		sizeof(server)) == SOCKET_ERROR) {
+		printf("Bind failed with error code: %d", WSAGetLastError());
+		closesocket(conn);
+		WSACleanup();
+		return -1;
+	}
+
+	printf("Bind done.\n");
+
+	//LISTEN to incoming connections (socket server moves to listening mode)
+	if (listen(conn, 1) == SOCKET_ERROR) {
+		printf("Listen failed with error code: %d", WSAGetLastError());
+		closesocket(conn);
+		WSACleanup();
+		return -1;
+	}
+
+	//ACCEPT incoming connections (server keeps waiting for them)
+	printf("Waiting for incoming connections...\n");
+	int stsize = sizeof(struct sockaddr);
+	s = accept(conn, (struct sockaddr*) &client, &stsize);
+	// Using comm_socket is able to send/receive data to/from connected client
+	if (conn == INVALID_SOCKET) {
+		printf("accept failed with error code : %d", WSAGetLastError());
+		closesocket(conn);
+		WSACleanup();
+		return -1;
+	}
+	printf("Incomming connection from: %s (%d)\n", inet_ntoa(client.sin_addr),
+			ntohs(client.sin_port));
+
+	// Closing the listening sockets (is not going to be used anymore)
+	closesocket(conn);
 
 
 	int result = sqlite3_open("../dbproyecto.db", &db);
