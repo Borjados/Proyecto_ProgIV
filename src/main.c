@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "admin/menuAdmin.h"
 #include "../lib/sqlite3/sqlite3.h"
 #include "auth/inicio.h"
 #include "cfg/cfg.h"
 #include <winsock2.h>
+#include "dbManager/consultas.h"
 
 
 
@@ -61,7 +63,7 @@ int main(){
 
 
     	//TODO lo que esta aqui comentado son los comandos que tiene el server para llamar a BD, lo he compilado y tira pero lo comento por si acaso
-    	/*printf("Waiting for incoming commands from client... \n");
+    	printf("Waiting for incoming commands from client... \n");
 
     	do{
     		recv(s, recvBuff, sizeof(recvBuff), 0);
@@ -121,12 +123,15 @@ int main(){
     				    break;
     				case 8:
     				    cont = cont + 1;
-    				    strcpy(tipo,recvBuff);
+    				    strcpy(&tipo,recvBuff); //strcpy pide *char
     				    recv(s, recvBuff, sizeof(recvBuff), 0);
     				    break;
     				case 9:
     				    cont = 0;
-    				    insertNewUser(db, nombre, username, apellidos, contrasena, tipo, DNI, tarjeta, telefono);
+                        int dni = atoi(DNI); //La función de debajo pide int, no char[]
+                        int card = atoi(tarjeta);
+                        int tel = atoi(telefono);
+    				    insertNewUser(db, nombre, username, apellidos, contrasena, &tipo, dni, card, tel);
     				    recv(s, recvBuff, sizeof(recvBuff), 0);
     				    break;
     				}
@@ -156,17 +161,21 @@ int main(){
     		        		break;
     		        	case 3:
     		        		cont = 0;
-    		        		newInicio(db, nombre, contrasena, valor);
+    		        		newInicio(db, nombre, contrasena, &valor);
     		        		recv(s, recvBuff, sizeof(recvBuff), 0);
     		        		break;
     		        }
     		    }
-    		}
+    		}else if(strcmp(recvBuff, "STAT_TARIFA") == 0){}//TODO completar las funciones y crear las peticiones en el cliente
+            else if(strcmp(recvBuff, "STAT_COMM_USER") == 0){}
+            else if(strcmp(recvBuff, "UPDATE_BONOS") == 0){}
+            else if(strcmp(recvBuff, "ALQUILAR") == 0){}
+            else if(strcmp(recvBuff, "DEVOLVER") == 0){}
     	}while (1);
 
 
 
-*/
+
     }
 
 	sqlite3_close(db);
