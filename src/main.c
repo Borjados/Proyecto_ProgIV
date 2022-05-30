@@ -127,7 +127,7 @@ int main(){
 
     			recv(s, recvBuff, sizeof(recvBuff), 0);
 
-    			while(strcmp(recvBuff, "REGISTRO-END") != 0){
+    			while(strcmpi(recvBuff, "REGISTRO-END") != 0){
     				switch (cont){
     				case 1:
     					cont = cont + 1;
@@ -189,15 +189,15 @@ int main(){
     			}
 
     		}
-    		else if(strcmp(recvBuff, "INICIO") == 0){
+    		else if(strcmpi(recvBuff, "INICIO") == 0){
     			char nombre[20];
     		    char contrasena[20];
-    		    int cont = 0;
+    		    int cont = 1;
     		    int valor;
 
     		    recv(s, recvBuff, sizeof(recvBuff), 0);
 
-    		    while(strcmp(recvBuff, "INICIO-END") != 0){
+    		    while(strcmpi(recvBuff, "INICIO-END") != 0){
     		    	switch (cont){
     		        	case 1:
     		        		cont = cont + 1;
@@ -212,27 +212,77 @@ int main(){
     		        	case 3:
     		        		cont = 0;
     		        		newInicio(db, nombre, contrasena, &valor);
+    		        		if (valor == 1){
+        				    	strcpy(sendBuff, "OK");
+        				    	send(s, sendBuff, sizeof(sendBuff), 0);
+    		        		}
+    		        		else{
+        				    	strcpy(sendBuff, "ERROR");
+        				    	send(s, sendBuff, sizeof(sendBuff), 0);
+    		        		}
     		        		recv(s, recvBuff, sizeof(recvBuff), 0);
     		        		break;
     		        }
     		    }
-    		}else if(strcmp(recvBuff, "STAT_TARIFA") == 0){
+    		}
+
+    		else if(strcmpi(recvBuff, "INICIOA") == 0){
+    			char nombre[20];
+    		    char contrasena[20];
+    		    int cont = 1;
+    		    int valor;
+
+    		    recv(s, recvBuff, sizeof(recvBuff), 0);
+
+    		    while(strcmpi(recvBuff, "INICIOA-END") != 0){
+    		    	switch (cont){
+    		        	case 1:
+    		        		cont = cont + 1;
+    		        		strcpy(nombre,recvBuff);
+    		        		recv(s, recvBuff, sizeof(recvBuff), 0);
+    		        		break;
+    		        	case 2:
+    		        		cont = cont + 1;
+    		        		strcpy(contrasena,recvBuff);
+    		        		recv(s, recvBuff, sizeof(recvBuff), 0);
+    		        		break;
+    		        	case 3:
+    		        		cont = 0;
+    		        		newInicioA(db, nombre, contrasena, &valor);
+    		        		if (valor == 1){
+        				    	strcpy(sendBuff, "OK");
+        				    	send(s, sendBuff, sizeof(sendBuff), 0);
+    		        		}
+    		        		else{
+        				    	strcpy(sendBuff, "ERROR");
+        				    	send(s, sendBuff, sizeof(sendBuff), 0);
+    		        		}
+    		        		recv(s, recvBuff, sizeof(recvBuff), 0);
+    		        		break;
+    		        }
+    		    }
+    		}
+
+    		else if(strcmpi(recvBuff, "STAT_TARIFA") == 0){
     			recv(s, recvBuff, sizeof(recvBuff), 0);
     			while(strcmp(recvBuff, "STAT_TARIFA-END") != 0){
     				tarifaMasUsada(db);
     				void usuarioMasComun(sqlite3 *db);
     			}
     		}//TODO completar las funciones y crear las peticiones en el cliente
-            else if(strcmp(recvBuff, "STAT_COMM_USER") == 0){
+            else if(strcmpi(recvBuff, "STAT_COMM_USER") == 0){
             	recv(s, recvBuff, sizeof(recvBuff), 0);
             	while(strcmp(recvBuff, "STAT_COMM_USER") != 0){
             		usuarioMasComun(db);
             	}
             }
-            else if(strcmp(recvBuff, "STAT_FREQ_USER") == 0){}
-            else if(strcmp(recvBuff, "UPDATE_BONOS") == 0){}
-            else if(strcmp(recvBuff, "ALQUILAR") == 0){}
-            else if(strcmp(recvBuff, "DEVOLVER") == 0){}
+            else if(strcmpi(recvBuff, "STAT_FREQ_USER") == 0){}
+            else if(strcmpi(recvBuff, "UPDATE_BONOS") == 0){}
+            else if(strcmpi(recvBuff, "ALQUILAR") == 0){}
+            else if(strcmpi(recvBuff, "DEVOLVER") == 0){}
+            else if(strcmpi(recvBuff, "END") == 0){
+            	exit(-1);
+            }
     	}while (1);
 
 

@@ -13,4 +13,6 @@ void tarifaMasUsada(sqlite3 *db);
 
 void usuarioMasComun(sqlite3 *db);
 
+int newInicioA(sqlite3 *db, char *nombre, char *contrasena, int *valor);
+
 #endif /* SQLITE3_CONSULTAS_H_ */

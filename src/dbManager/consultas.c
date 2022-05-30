@@ -81,8 +81,9 @@ int updateBonos(sqlite3 *db, char tipo[], int precio){
 int newInicio(sqlite3 *db, char *nombre, char *contrasena, int *valor) {
 	sqlite3_stmt *stmt;
 	char sql[] =
-			"Select contrasenya, tipo_usuario from Usuario where username = ?";
+			"Select u.contrasenya from Usuario u where u.username = ?";
 	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+	sqlite3_bind_text(stmt, 1, nombre, strlen(nombre), SQLITE_STATIC);
 	if (result != SQLITE_OK) {
 		printf("Error preparing statement (SELECT)\n");
 		printf("%s\n", sqlite3_errmsg(db));
@@ -98,7 +99,6 @@ int newInicio(sqlite3 *db, char *nombre, char *contrasena, int *valor) {
 		result = sqlite3_step(stmt);
 		if (result == SQLITE_ROW) {
 			strcpy(contrasenya, (char*) sqlite3_column_text(stmt, 0));
-			strcpy(tipo_usuario, (char *) sqlite3_column_text(stmt, 1));
 //					printf("ID: %d Name: %s\n", id, name); //TODO $id y $name no estan inicializadas, no existen
 				}
 			} while (result == SQLITE_ROW);
@@ -112,7 +112,14 @@ int newInicio(sqlite3 *db, char *nombre, char *contrasena, int *valor) {
 
 			printf("Prepared statement finalized (SELECT)\n");
 
-			if (strcmp(contrasena,contrasenya)) {
+			if (strcmpi(contrasena,contrasenya)==0){
+				*valor = 1;
+			}
+			else{
+				*valor = 2;
+			}
+
+			/*if (strcmp(contrasena,contrasenya)) {
 				if (strcmp(tipo_usuario,"estudiante") || strcmp(tipo_usuario,"regular") || strcmp(tipo_usuario,"profesor")) {
 					*valor = 1;
 				} else if (strcmp(tipo_usuario,"administrador")) {
@@ -120,7 +127,7 @@ int newInicio(sqlite3 *db, char *nombre, char *contrasena, int *valor) {
 				}
 			} else {
 				*valor = 3;
-			}
+			}*/
 
 			return result;
 
@@ -185,6 +192,54 @@ void usuarioMasComun(sqlite3 *db){
 			printf("Usuario externo.");
 		}
 	}
+
+}
+
+int newInicioA(sqlite3 *db, char *nombre, char *contrasena, int *valor) {
+	sqlite3_stmt *stmt;
+	char sql[] =
+			"Select a.contrasenya from Administrador a where a.usuario = ?";
+	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+	sqlite3_bind_text(stmt, 1, nombre, strlen(nombre), SQLITE_STATIC);
+	if (result != SQLITE_OK) {
+		printf("Error preparing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+
+	printf("SQL query prepared (SELECT)\n");
+
+	char contrasenya[200];
+	char tipo_usuario[200];
+
+	do {
+		result = sqlite3_step(stmt);
+		if (result == SQLITE_ROW) {
+			printf("%s", nombre);
+			printf("%s", contrasena);
+			strcpy(contrasenya, (char*) sqlite3_column_text(stmt, 0));
+			printf("%s", contrasenya);
+//					printf("ID: %d Name: %s\n", id, name); //TODO $id y $name no estan inicializadas, no existen
+				}
+			} while (result == SQLITE_ROW);
+
+			result = sqlite3_finalize(stmt);
+			if (result != SQLITE_OK) {
+				printf("Error finalizing statement (SELECT)\n");
+				printf("%s\n", sqlite3_errmsg(db));
+				return result;
+			}
+
+			printf("Prepared statement finalized (SELECT)\n");
+
+			if (strcmpi(contrasena,contrasenya)==0){
+				*valor = 1;
+			}
+			else{
+				*valor = 2;
+			}
+
+			return result;
 
 }
 
