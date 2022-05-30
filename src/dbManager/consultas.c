@@ -209,13 +209,13 @@ void usuarioMasComun(sqlite3 *db, int *valor){
 	if (result == SQLITE_ROW) {
 		const char *id = sqlite3_column_text(stmt, 0);
 
-		if (strcmpi(id, "estudiante") == 0) {
+		if (strcmpi(id, "e") == 0) {
 			*valor = 1;
 		}
-		if (strcmpi(id, "profesor") == 0) {
+		if (strcmpi(id, "p") == 0) {
 			*valor = 2;
 		}
-		if (strcmpi(id, "regular") == 0) {
+		if (strcmpi(id, "r") == 0) {
 			*valor = 3;
 		}
 	}
