@@ -111,7 +111,7 @@ int main(){
     	do{
     		recv(s, recvBuff, sizeof(recvBuff), 0);
 
-    		printf("Command received: %s \n", recvBuff);
+    		//printf("Command received: %s \n", recvBuff);
 
     		if(strcmp(recvBuff, "REGISTRO") == 0){
     			int selecadmin, bono;
@@ -264,20 +264,85 @@ int main(){
     		}
 
     		else if(strcmpi(recvBuff, "STAT_TARIFA") == 0){
+    			int valor;
     			recv(s, recvBuff, sizeof(recvBuff), 0);
     			while(strcmp(recvBuff, "STAT_TARIFA-END") != 0){
-    				tarifaMasUsada(db);
-    				void usuarioMasComun(sqlite3 *db);
+    				tarifaMasUsada(db,  &valor);
+    				switch (valor){
+    				case 1:
+				    	strcpy(sendBuff, "Bono Diario");
+				    	send(s, sendBuff, sizeof(sendBuff), 0);
+				    	break;
+    				case 2:
+    					strcpy(sendBuff, "Bono semanal");
+    					send(s, sendBuff, sizeof(sendBuff), 0);
+    					break;
+    				case 3:
+    					strcpy(sendBuff, "Bono de 2 semanas");
+    					send(s, sendBuff, sizeof(sendBuff), 0);
+    					break;
+    				case 4:
+    					strcpy(sendBuff, "Bono mensual");
+    					send(s, sendBuff, sizeof(sendBuff), 0);
+    					break;
+    				case 5:
+    					strcpy(sendBuff, "Bono cuatrimestral");
+    					send(s, sendBuff, sizeof(sendBuff), 0);
+    					break;
+    				}
+    				recv(s, recvBuff, sizeof(recvBuff), 0);
     			}
     		}//TODO completar las funciones y crear las peticiones en el cliente
             else if(strcmpi(recvBuff, "STAT_COMM_USER") == 0){
+            	int valor;
             	recv(s, recvBuff, sizeof(recvBuff), 0);
-            	while(strcmp(recvBuff, "STAT_COMM_USER") != 0){
-            		usuarioMasComun(db);
+            	while(strcmp(recvBuff, "STAT_COMM_USER-END") != 0){
+            		usuarioMasComun(db, &valor);
+    				switch (valor){
+    				case 1:
+				    	strcpy(sendBuff, "Estudiante");
+				    	send(s, sendBuff, sizeof(sendBuff), 0);
+				    	break;
+    				case 2:
+    					strcpy(sendBuff, "Profesor");
+    					send(s, sendBuff, sizeof(sendBuff), 0);
+    					break;
+    				case 3:
+    					strcpy(sendBuff, "Regular");
+    					send(s, sendBuff, sizeof(sendBuff), 0);
+    					break;
+    				}
             	}
             }
             else if(strcmpi(recvBuff, "STAT_FREQ_USER") == 0){}
-            else if(strcmpi(recvBuff, "UPDATE_BONOS") == 0){}
+
+            else if(strcmpi(recvBuff, "UPDATE_BONOS") == 0){
+    			char tipo[20];
+    			int cont = 1;
+    		    char precio[20];
+            	recv(s, recvBuff, sizeof(recvBuff), 0);
+            	while(strcmp(recvBuff, "UPDATE_BONOS-END") != 0){
+            		switch (cont){
+    				case 1:
+		        		cont = cont + 1;
+		        		strcpy(tipo,recvBuff);
+		        		recv(s, recvBuff, sizeof(recvBuff), 0);
+		        		break;
+    				case 2:
+		        		cont = cont + 1;
+		        		strcpy(precio,recvBuff);
+		        		recv(s, recvBuff, sizeof(recvBuff), 0);
+		        		break;
+    				case 3:
+    				    cont = 0;
+                		int type = atoi(tipo);
+                		int preis = atoi(precio);
+                		updateBonos(db, type, preis);
+    				    recv(s, recvBuff, sizeof(recvBuff), 0);
+    				    break;
+            		}
+            	}
+            }
             else if(strcmpi(recvBuff, "ALQUILAR") == 0){}
             else if(strcmpi(recvBuff, "DEVOLVER") == 0){}
             else if(strcmpi(recvBuff, "END") == 0){
