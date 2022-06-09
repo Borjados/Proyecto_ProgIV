@@ -329,7 +329,31 @@ int main(){
     					send(s, sendBuff, sizeof(sendBuff), 0);
     					break;
     				}
+    				recv(s, recvBuff, sizeof(recvBuff), 0);
             	}
+            }
+
+            else if(strcmpi(recvBuff, "STAT_TAQUILLA") == 0){
+                       	int valor;
+                       	recv(s, recvBuff, sizeof(recvBuff), 0);
+                       	while(strcmp(recvBuff, "STAT_TAQUILLA-END") != 0){
+                       		pisomascomun(db, &valor);
+               				switch (valor){
+               				case 1:
+           				    	strcpy(sendBuff, "1");
+           				    	send(s, sendBuff, sizeof(sendBuff), 0);
+           				    	break;
+               				case 2:
+               					strcpy(sendBuff, "2");
+               					send(s, sendBuff, sizeof(sendBuff), 0);
+               					break;
+               				case 3:
+               					strcpy(sendBuff, "3");
+               					send(s, sendBuff, sizeof(sendBuff), 0);
+               					break;
+               				}
+               				recv(s, recvBuff, sizeof(recvBuff), 0);
+                       	}
             }
 
             else if(strcmpi(recvBuff, "UPDATE_BONOS") == 0){
@@ -358,6 +382,7 @@ int main(){
     				    recv(s, recvBuff, sizeof(recvBuff), 0);
     				    break;
             		}
+            		recv(s, recvBuff, sizeof(recvBuff), 0);
             	}
             }
             else if(strcmpi(recvBuff, "ALQUILAR") == 0){

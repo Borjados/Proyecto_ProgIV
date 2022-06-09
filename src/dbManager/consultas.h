@@ -27,4 +27,6 @@ int selectaquilla(sqlite3 *db, char nombre[], int *valor);
 
 int taquilladevolver(sqlite3 *db, int numero);
 
+void pisomascomun(sqlite3* db, int *valor);
+
 #endif /* SQLITE3_CONSULTAS_H_ */

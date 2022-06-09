@@ -17,6 +17,8 @@ int insertNewUser(sqlite3 *db, char nombre[], char username[], char apellidos[],
 			return result;
 		}
 
+		int telefon = 945242492;
+
 		printf("SQL query prepared (INSERT)\n");
 		fprintf(f, "SQL query prepared (INSERT)\n");
 
@@ -26,7 +28,7 @@ int insertNewUser(sqlite3 *db, char nombre[], char username[], char apellidos[],
 		sqlite3_bind_text(stmt, 4, apellidos, strlen(apellidos), SQLITE_STATIC);
 		sqlite3_bind_int(stmt, 5, tarjeta);
 		sqlite3_bind_text(stmt, 6, contrasena, strlen(contrasena), SQLITE_STATIC);
-		sqlite3_bind_int(stmt, 7, telefono);
+		sqlite3_bind_int(stmt, 7, telefon);
 		sqlite3_bind_text(stmt, 8, tipo, strlen(tipo), SQLITE_STATIC);
 
 
@@ -214,9 +216,6 @@ void usuarioMasComun(sqlite3 *db, int *valor){
 		}
 		if (strcmpi(id, "p") == 0) {
 			*valor = 2;
-		}
-		if (strcmpi(id, "r") == 0) {
-			*valor = 3;
 		}
 	}
 
@@ -562,4 +561,38 @@ int taquilladevolver(sqlite3 *db, int numero){
 		fclose(f);
 
 		return SQLITE_OK;
+}
+
+void pisomascomun(sqlite3* db, int *valor){
+	sqlite3_stmt *stmt;
+	FILE *f;
+    f = fopen("Log.txt", "a");
+
+	char sql[] = "SELECT t.piso FROM Taquilla t WHERE taquilla_alquilada=1 GROUP BY piso ORDER BY COUNT(piso) DESC";
+
+	int result = sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL);
+	if (result != SQLITE_OK) {
+		printf("Error preparing statement (INSERT)\n");
+		fprintf(f, "Error preparing statement (INSERT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		fprintf(f, "%s\n", sqlite3_errmsg(db));
+	}
+
+	result = sqlite3_step(stmt);
+	if (result == SQLITE_ROW) {
+		int id = sqlite3_column_int(stmt, 0);
+
+		if (id == 1) {
+			*valor = 1;
+		}
+		if (id == 2) {
+			*valor = 2;
+		}
+		if (id == 3) {
+			*valor = 3;
+		}
+	}
+
+	fclose(f);
+
 }
