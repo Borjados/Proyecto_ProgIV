@@ -58,7 +58,7 @@ int insertNewUser(sqlite3 *db, char nombre[], char username[], char apellidos[],
 		return SQLITE_OK;
 }
 
-int updateBonos(sqlite3 *db, char tipo[], int precio){
+int updateBonos(sqlite3 *db, int tipo, int precio){
 	sqlite3_stmt *stmt;
 	FILE *f;
     f = fopen("Log.txt", "a");
@@ -77,6 +77,9 @@ int updateBonos(sqlite3 *db, char tipo[], int precio){
 
 	sqlite3_bind_int(stmt, 1, precio);
 	sqlite3_bind_int(stmt, 2, tipo);
+
+	fprintf(f, "\n%d\n", precio);
+	fprintf(f, "\n%d\n", tipo);
 
 	result = sqlite3_step(stmt);
 	if (result != SQLITE_DONE) {

@@ -379,10 +379,10 @@ int main(){
                 		int type = atoi(tipo);
                 		int preis = atoi(precio);
                 		updateBonos(db, type, preis);
-    				    recv(s, recvBuff, sizeof(recvBuff), 0);
+                		recv(s, recvBuff, sizeof(recvBuff), 0);
     				    break;
             		}
-            		recv(s, recvBuff, sizeof(recvBuff), 0);
+
             	}
             }
             else if(strcmpi(recvBuff, "ALQUILAR") == 0){
