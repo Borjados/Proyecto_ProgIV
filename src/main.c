@@ -391,6 +391,7 @@ int main(){
     		    char nombre[20];
     		    int valor;
     		    int valor2;
+    		    char piso[20];
             	recv(s, recvBuff, sizeof(recvBuff), 0);
             	while(strcmp(recvBuff, "ALQUILAR-END") != 0){
             		switch (cont){
@@ -405,12 +406,18 @@ int main(){
     					recv(s, recvBuff, sizeof(recvBuff), 0);
     					break;
     				case 3:
+    					cont = cont + 1;
+    					strcpy(piso,recvBuff);
+    					recv(s, recvBuff, sizeof(recvBuff), 0);
+    					break;
+    				case 4:
     				    cont = 0;
     				    int type = atoi(tipo);
+    				    int pisoi = atoi(piso);
     				    alquilar(db, nombre, type, &valor);
-    				    taquillaelegir(db, &valor2);
+    				    taquillaelegir(db, &valor2, pisoi);
     				    taquillaalquilar(db, valor2);
-    				    usuarioTaquilla(db, nombre, valor2);
+    				    usuarioTaquilla(db, nombre, valor2, pisoi, type);
     				    usuarioBono(db, nombre, type);
 				    	sprintf(sendBuff, "%d", valor);
 				    	send(s, sendBuff, sizeof(sendBuff), 0);
@@ -425,7 +432,7 @@ int main(){
             else if(strcmpi(recvBuff, "DEVOLVER") == 0){
     			int cont = 1;
     		    char nombre[20];
-    		    int valor;
+    		    char numero[20];
             	recv(s, recvBuff, sizeof(recvBuff), 0);
             	while(strcmp(recvBuff, "DEVOLVER-END") != 0){
             		switch (cont){
@@ -435,16 +442,23 @@ int main(){
     					recv(s, recvBuff, sizeof(recvBuff), 0);
     					break;
     				case 2:
+    					cont = cont + 1;
+    					strcpy(numero,recvBuff);
+    					recv(s, recvBuff, sizeof(recvBuff), 0);
+    					break;
+    				case 3:
     				    cont = 0;
-    				    selectaquilla(db, nombre, &valor);
+    				    int num = atoi(numero);
+    				    int valor = selectaquilla(db, nombre, num);
     				    if(valor == 0){
-    				    	sprintf(sendBuff, "%d", valor);
-    				    	send(s, sendBuff, sizeof(sendBuff), 0);
+        				    taquilladevolver(db, num);
+        				    sprintf(sendBuff, "%d", num);
+        				    send(s, sendBuff, sizeof(sendBuff), 0);
     				    }
     				    else{
-    				    	taquilladevolver(db, valor);
-    				    	sprintf(sendBuff, "%d", valor);
-    				    	send(s, sendBuff, sizeof(sendBuff), 0);
+    				    	int v = 0;
+        				    sprintf(sendBuff, "%d", v);
+        				    send(s, sendBuff, sizeof(sendBuff), 0);
     				    }
     				    recv(s, recvBuff, sizeof(recvBuff), 0);
     				    break;

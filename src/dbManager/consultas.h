@@ -17,13 +17,13 @@ int newInicioA(sqlite3 *db, char *nombre, char *contrasena, int *valor);
 
 int alquilar(sqlite3 *db, char *nombre, int tipo, int *valor);
 
-int taquillaelegir(sqlite3 *db, int *valor);
+int taquillaelegir(sqlite3 *db, int *valor, int piso);
 
 int taquillaalquilar(sqlite3 *db, int numero);
 
-int usuarioTaquilla(sqlite3 *db, char nombre[], int numero);
+int usuarioTaquilla(sqlite3 *db, char nombre[], int numero, int Piso, int Bono);
 
-int selectaquilla(sqlite3 *db, char nombre[], int *valor);
+int selectaquilla(sqlite3 *db, char nombre[], int numero);
 
 int taquilladevolver(sqlite3 *db, int numero);
 

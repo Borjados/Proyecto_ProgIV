@@ -117,8 +117,8 @@ int newInicio(sqlite3 *db, char *nombre, char *contrasena, int *valor) {
 		return result;
 	}
 
-	printf("SQL query prepared (SELECT)\n");
-	fprintf(f, "SQL query prepared (SELECT)\n");
+	printf("SQL Login prepared (SELECT)\n");
+	fprintf(f, "SQL Login prepared (SELECT)\n");
 
 	char contrasenya[200];
 	char tipo_usuario[200];
@@ -141,8 +141,8 @@ int newInicio(sqlite3 *db, char *nombre, char *contrasena, int *valor) {
 			}
 
 
-			printf("Prepared statement finalized (SELECT)\n");
-			printf(f, "Prepared statement finalized (SELECT)\n");
+			printf("Prepared Login finalized (SELECT)\n");
+			fprintf(f, "Prepared Login finalized (SELECT)\n");
 
 			if (strcmpi(contrasena,contrasenya)==0){
 				*valor = 1;
@@ -160,7 +160,7 @@ void tarifaMasUsada(sqlite3 *db, int *valor){
 	FILE *f;
     f = fopen("Log.txt", "a");
 
-	char sql[] = "SELECT u.id_bono FROM Usuario u GROUP BY id_bono ORDER BY COUNT(id_bono) DESC";
+	char sql[] = "SELECT a.bono FROM Alquiler a GROUP BY bono ORDER BY COUNT(bono) DESC";
 
 	int result = sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL);
 	if (result != SQLITE_OK) {
@@ -310,15 +310,17 @@ int alquilar(sqlite3 *db, char *nombre, int tipo, int *valor){
 	return result;
 }
 
-int taquillaelegir(sqlite3 *db, int *valor){
+int taquillaelegir(sqlite3 *db, int *valor, int piso){
 	sqlite3_stmt *stmt;
 	int cont = 0;
 	FILE *f;
     f = fopen("Log.txt", "a");
 
-			char sql[] = "Select t.id_taquilla from Taquilla t where t.taquilla_alquilada = 0";
+			char sql[] = "Select t.id_taquilla from Taquilla t where t.taquilla_alquilada = 0 and piso = ?";
 
 			int result = sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL);
+
+			sqlite3_bind_int(stmt, 1, piso);
 
 			if (result != SQLITE_OK) {
 				printf("Error preparing statement (INSERT)\n");
@@ -326,7 +328,6 @@ int taquillaelegir(sqlite3 *db, int *valor){
 				printf("%s\n", sqlite3_errmsg(db));
 				fprintf(f, "%s\n", sqlite3_errmsg(db));
 			}
-
 
 			printf("Prepared alquilar statement finalized (SELECT)\n");
 			fprintf(f, "Prepared alquilar statement finalized (SELECT)\n");
@@ -341,7 +342,10 @@ int taquillaelegir(sqlite3 *db, int *valor){
 
 			}
 
+			fprintf(f, "\nID: %d\n", id);
+
 			*valor = id;
+
 			fclose(f);
 		return result;
 }
@@ -389,12 +393,12 @@ int taquillaalquilar(sqlite3 *db, int numero){
 		return SQLITE_OK;
 }
 
-int usuarioTaquilla(sqlite3 *db, char nombre[], int numero){
+int usuarioTaquilla(sqlite3 *db, char nombre[], int numero, int Piso, int Bono){
 	sqlite3_stmt *stmt;
 	FILE *f;
     f = fopen("Log.txt", "a");
 
-		char sql[] = "UPDATE Usuario SET id_taquilla=? WHERE username=?";
+		char sql[] = "insert into Alquiler (username, piso, bono, taquilla) values (?, ?, ?, ?)";
 		int result = sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL) ;
 		if (result != SQLITE_OK) {
 			printf("Error preparing statement (INSERT)\n");
@@ -406,9 +410,12 @@ int usuarioTaquilla(sqlite3 *db, char nombre[], int numero){
 		printf("SQL query prepared (UPDATE)\n");
 		fprintf(f, "SQL query prepared (UPDATE)\n");
 
+		sqlite3_bind_text(stmt, 1, nombre, strlen(nombre), SQLITE_STATIC);
+		sqlite3_bind_int(stmt, 2, Piso);
+		sqlite3_bind_int(stmt, 3, Bono);
+		sqlite3_bind_int(stmt, 4, numero);
 
-		sqlite3_bind_int(stmt, 1, numero);
-		sqlite3_bind_text(stmt, 2, nombre, strlen(nombre), SQLITE_STATIC);
+
 
 
 		result = sqlite3_step(stmt);
@@ -478,15 +485,15 @@ int usuarioBono(sqlite3 *db, char nombre[], int numero){
 		return SQLITE_OK;
 }
 
-int selectaquilla(sqlite3 *db, char nombre[], int *valor){
+int selectaquilla(sqlite3 *db, char nombre[], int numero){
 	sqlite3_stmt *stmt;
 	int cont = 0;
 	FILE *f;
     f = fopen("Log.txt", "a");
 
-			char sql[] = "Select u.id_taquilla from Usuario u where u.username = ?";
+			char sql[] = "DELETE FROM Alquiler WHERE username = ? and taquilla = ?";
 
-			int result = sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL);
+			int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
 
 			if (result != SQLITE_OK) {
 				printf("Error preparing statement (INSERT)\n");
@@ -500,22 +507,33 @@ int selectaquilla(sqlite3 *db, char nombre[], int *valor){
 			fprintf(f, "Prepared alquilar statement finalized (SELECT)\n");
 
 			sqlite3_bind_text(stmt, 1, nombre, strlen(nombre), SQLITE_STATIC);
-
-			int id = 0;
+			sqlite3_bind_int(stmt, 2, numero);
 
 			result = sqlite3_step(stmt);
-			if (result == SQLITE_ROW) {
-				id = sqlite3_column_int(stmt, 0);
-				//*valor = id;
-				cont = cont + 1;
 
+			if (result != SQLITE_DONE) {
+				printf("%s\n", sqlite3_errmsg(db));
+				printf("%d\n", result);
+				printf("Error inserting new data into usuario table\n");
+				fprintf(f, "Error inserting new data into usuario table\n");
+				return result;
 			}
 
-			*valor = id;
+			result = sqlite3_finalize(stmt);
+			if (result != SQLITE_OK) {
+				printf("Error finalizing statement (INSERT)\n");
+				fprintf(f, "Error finalizing statement (INSERT)\n");
+				printf("%s\n", sqlite3_errmsg(db));
+				fprintf(f, "%s\n", sqlite3_errmsg(db));
+				return result;
+			}
+
+			printf("Prepared statement finalized (INSERT)\n");
+			fprintf(f, "Prepared statement finalized (INSERT)\n");
+
 
 			fclose(f);
-
-		return result;
+			return SQLITE_OK;
 
 }
 
@@ -568,7 +586,7 @@ void pisomascomun(sqlite3* db, int *valor){
 	FILE *f;
     f = fopen("Log.txt", "a");
 
-	char sql[] = "SELECT t.piso FROM Taquilla t WHERE taquilla_alquilada=1 GROUP BY piso ORDER BY COUNT(piso) DESC";
+	char sql[] = "SELECT t.Piso FROM Alquiler t GROUP BY piso ORDER BY COUNT(piso) DESC";
 
 	int result = sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL);
 	if (result != SQLITE_OK) {
