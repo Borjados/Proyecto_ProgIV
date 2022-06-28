@@ -168,29 +168,24 @@ int main(){
     				    break;
     				case 5:
     				    cont = cont + 1;
-    				    strcpy(telefono,recvBuff);
+    				    strcpy(username,recvBuff);
     				    recv(s, recvBuff, sizeof(recvBuff), 0);
     				    break;
     				case 6:
     				    cont = cont + 1;
-    				    strcpy(username,recvBuff);
+    				    strcpy(contrasena,recvBuff);
     				    recv(s, recvBuff, sizeof(recvBuff), 0);
     				    break;
     				case 7:
     				    cont = cont + 1;
-    				    strcpy(contrasena,recvBuff);
-    				    recv(s, recvBuff, sizeof(recvBuff), 0);
-    				    break;
-    				case 8:
-    				    cont = cont + 1;
     				    strcpy(&tipo,recvBuff); //strcpy pide *char
     				    recv(s, recvBuff, sizeof(recvBuff), 0);
     				    break;
-    				case 9:
+    				case 8:
     				    cont = 0;
                         int card = atoi(tarjeta);
                         int tel = atoi(telefono);
-    				    int ret = insertNewUser(db, nombre, username, apellidos, contrasena, &tipo, DNI, card, tel);
+    				    int ret = insertNewUser(db, nombre, username, apellidos, contrasena, &tipo, DNI, card);
     				    if(ret == 0){
     				    	strcpy(sendBuff, "OK");
     				    	send(s, sendBuff, sizeof(sendBuff), 0);
@@ -465,6 +460,44 @@ int main(){
 
             		}
             	}
+            }
+            else if(strcmpi(recvBuff, "VER-PRECIO") == 0){
+            	char nombre[20];
+            	int cont = 1;
+            	int valor = 0;
+            	recv(s, recvBuff, sizeof(recvBuff), 0);
+            	while(strcmp(recvBuff, "VER-PRECIO-END") != 0){
+               		switch (cont){
+	    			case 1:
+	    				cont = cont + 1;
+	    				strcpy(nombre,recvBuff);
+	    				recv(s, recvBuff, sizeof(recvBuff), 0);
+	    				printf("%s\n", recvBuff);
+	    				break;
+	    			case 2:
+	    				cont = cont + 1;
+	    				printf("%d\n", valor);
+	    				selectTipo(db, nombre, &valor);
+	    				printf("%d\n", valor);
+	       				switch (valor){
+	        				case 1:
+	    				    	strcpy(sendBuff, "Estudiante");
+	    				    	send(s, sendBuff, sizeof(sendBuff), 0);
+	    				    	break;
+	        				case 2:
+	        					strcpy(sendBuff, "Profesor");
+	        					send(s, sendBuff, sizeof(sendBuff), 0);
+	        					break;
+	        				case 3:
+	        					strcpy(sendBuff, "Regular");
+	        					send(s, sendBuff, sizeof(sendBuff), 0);
+	        					break;
+	        				}
+	       				recv(s, recvBuff, sizeof(recvBuff), 0);
+	    				break;
+            	}
+            	}
+
             }
             else if(strcmpi(recvBuff, "END") == 0){
             	exit(-1);

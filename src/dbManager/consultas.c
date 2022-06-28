@@ -2,12 +2,12 @@
 #include <stdio.h>
 #include <string.h>
 
-int insertNewUser(sqlite3 *db, char nombre[], char username[], char apellidos[], char contrasena[], char tipo[], char DNI[], int tarjeta, int telefono){
+int insertNewUser(sqlite3 *db, char nombre[], char username[], char apellidos[], char contrasena[], char tipo[], char DNI[], int tarjeta){
 	sqlite3_stmt *stmt;
     FILE *f;
     f = fopen("Log.txt", "a");
 
-		char sql[] = "insert into Usuario (dni, username, nombre, apellidos, num_tarjeta, contrasenya, telefono, tipo_usuario) values (?, ?, ?, ?, ?, ?, ?, ?)";
+		char sql[] = "insert into Usuario (dni, username, nombre, apellidos, num_tarjeta, contrasenya,tipo_usuario) values (?, ?, ?, ?, ?, ?, ?)";
 		int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
 		if (result != SQLITE_OK) {
 			printf("Error preparing statement (INSERT)\n");
@@ -16,8 +16,6 @@ int insertNewUser(sqlite3 *db, char nombre[], char username[], char apellidos[],
 			fprintf(f, "%s\n", sqlite3_errmsg(db));
 			return result;
 		}
-
-		int telefon = 945242492;
 
 		printf("SQL query prepared (INSERT)\n");
 		fprintf(f, "SQL query prepared (INSERT)\n");
@@ -28,8 +26,7 @@ int insertNewUser(sqlite3 *db, char nombre[], char username[], char apellidos[],
 		sqlite3_bind_text(stmt, 4, apellidos, strlen(apellidos), SQLITE_STATIC);
 		sqlite3_bind_int(stmt, 5, tarjeta);
 		sqlite3_bind_text(stmt, 6, contrasena, strlen(contrasena), SQLITE_STATIC);
-		sqlite3_bind_int(stmt, 7, telefon);
-		sqlite3_bind_text(stmt, 8, tipo, strlen(tipo), SQLITE_STATIC);
+		sqlite3_bind_text(stmt, 7, tipo, strlen(tipo), SQLITE_STATIC);
 
 
 		result = sqlite3_step(stmt);
@@ -210,6 +207,8 @@ void usuarioMasComun(sqlite3 *db, int *valor){
 		fprintf(f, "%s\n", sqlite3_errmsg(db));
 	}
 
+
+
 	result = sqlite3_step(stmt);
 	if (result == SQLITE_ROW) {
 		const char *id = sqlite3_column_text(stmt, 0);
@@ -219,6 +218,9 @@ void usuarioMasComun(sqlite3 *db, int *valor){
 		}
 		if (strcmpi(id, "p") == 0) {
 			*valor = 2;
+		}
+		if (strcmpi(id, "r") == 0) {
+			*valor = 3;
 		}
 	}
 
@@ -591,6 +593,9 @@ void pisomascomun(sqlite3* db, int *valor){
 
 	char sql[] = "SELECT t.Piso FROM Alquiler t GROUP BY piso ORDER BY COUNT(piso) DESC";
 
+	printf("SQL query prepared (SELECT)\n");
+	fprintf(f, "SQL query prepared (SELECT)\n");
+
 	int result = sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL);
 	if (result != SQLITE_OK) {
 		printf("Error preparing statement (INSERT)\n");
@@ -614,6 +619,63 @@ void pisomascomun(sqlite3* db, int *valor){
 		}
 	}
 
+	printf("SQL query finalized (SELECT)\n");
+	fprintf(f, "SQL query finalized (SELECT)\n");
+
 	fclose(f);
+
+}
+
+int selectTipo(sqlite3 *db, char nombre[], int *valor){
+	sqlite3_stmt *stmt;
+	char cont[20];
+	FILE *f;
+    f = fopen("Log.txt", "a");
+
+			char sql[] = "Select u.tipo_usuario FROM Usuario u WHERE username = ?";
+
+
+
+			int result = sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL);
+			if (result != SQLITE_OK) {
+				printf("Error preparing statement (INSERT)\n");
+				fprintf(f, "Error preparing statement (INSERT)\n");
+				printf("%s\n", sqlite3_errmsg(db));
+				fprintf(f, "%s\n", sqlite3_errmsg(db));
+			}
+
+			printf("SQL query prepared (SELECT)\n");
+			fprintf(f, "SQL query prepared (SELECT)\n");
+
+
+			sqlite3_bind_text(stmt, 1, nombre, strlen(nombre), SQLITE_STATIC);
+
+			const char *id = sqlite3_column_text(stmt, 0);
+
+
+			result = sqlite3_step(stmt);
+			fprintf(f, "Result: %d\n", result);
+			if (result == SQLITE_ROW) {
+
+				const char *id = sqlite3_column_text(stmt, 0);
+
+				if (strcmpi(id, "e") == 0) {
+					*valor = 1;
+				}
+				if (strcmpi(id, "p") == 0) {
+					*valor = 2;
+				}
+				if (strcmpi(id, "r") == 0) {
+					*valor = 3;
+				}
+			}
+
+			printf("SQL query finalized (SELECT)\n");
+			fprintf(f, "SQL query finalized (SELECT)\n");
+
+
+
+			fclose(f);
+			return SQLITE_OK;
 
 }

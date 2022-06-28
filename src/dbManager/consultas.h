@@ -3,7 +3,7 @@
 
 #include "../../lib/sqlite3/sqlite3.h"
 
-int insertNewUser(sqlite3 *db, char nombre[], char username[], char apellidos[], char contrasena[], char tipo[], char DNI[], int tarjeta, int telefono);
+int insertNewUser(sqlite3 *db, char nombre[], char username[], char apellidos[], char contrasena[], char tipo[], char DNI[], int tarjeta);
 
 int updateBonos(sqlite3 *db, int tipo, int precio);
 
@@ -28,5 +28,7 @@ int selectaquilla(sqlite3 *db, char nombre[], int numero);
 int taquilladevolver(sqlite3 *db, int numero);
 
 void pisomascomun(sqlite3* db, int *valor);
+
+int selectTipo(sqlite3 *db, char nombre[], int *valor);
 
 #endif /* SQLITE3_CONSULTAS_H_ */
